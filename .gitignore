@@ -1,0 +1,17 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# macOS
+.DS_Store
+
+# Node.js Express
+.env
+
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
