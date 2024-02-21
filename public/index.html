@@ -5,7 +5,7 @@
     <title>SCG - Quay thưởng</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="d58Et_hG0KrLc6xKv03J8U5NA6jqak0kCFxBaz7Y1MM" />
+    <meta name="google-site-verification" content="d58Et_hG0KrLc6xKv03J8U5NA6jqak0kCFxBaz7Y1MM"/>
     <link rel="icon" href="images/logo.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="images/logo.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.svg">
@@ -70,29 +70,40 @@
         for (var i = 0; i < 10; i++) {
             var $slotbox = $('<div>').addClass('slotbox').appendTo('#spinner');
             var $ul = $('<ul>').appendTo($slotbox);
-            // $('<li>').text('\u00a0').appendTo($ul);
-            for (var j = 0; j < 9; j++) {
-                $('<li>').text(j + 1).appendTo($ul);
+            $('<li>').text('\u00a0').appendTo($ul);
+            for (var j = 0; j < 10; j++) {
+                $('<li>').text(j).appendTo($ul);
             }
-            for (var k = 0; k < 17; k++) {
+            for (var k = 0; k < 26; k++) {
                 $('<li>').text(String.fromCharCode(65 + k)).appendTo($ul);
             }
-            $ul.children().first().text('\u00a0');
-
         }
     });
 
     $('#btn-start').click(function () {
+        var result1 = [];
+        var result2 = [1, 1];
+
+        for (var i = 0; i < 10; i++) {
+            result1.push(Math.floor(Math.random() * 35) + 2);
+        }
+
+        var result = Math.random() < 0.5 ? result1 : result2;
+
+        console.log(result)
+
         sound.play();
         isSpinning = true;
         $('#btn-stop').prop('disabled', false);
         $('#btn-start').prop('disabled', true);
         $('#spinner ul').playSpin({
-            manualStop: true,
             stopSeq: 'leftToRight',
+            manualStop: true,
             easing: 'easeOutBack',
-            stopTime: 1500,
-            time: 1500,
+            useStopTime: true,
+            stopTime: 1000,
+            endNum: result,
+            time: 800,
             onEnd: function () {
                 ding.play();
             },
