@@ -10,106 +10,108 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/logo.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
-        rel="stylesheet">
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
+            rel="stylesheet">
     <link rel="stylesheet" href="css/jquery-ui.min.css">
     <link rel="stylesheet" href="css/app.css">
 </head>
 
 <body>
-    <div id="logo">
-        <img src="images/logo.svg" alt="logo">
+<div id="logo">
+    <img src="images/logo.svg" alt="logo">
+</div>
+
+<!-- <header class="header-slotmachine">
+    <div class="event-img">
+        <img src="images/Text1.png" alt="logo-uan">
+    </div>
+    <div class="event-img">
+        <img src="images/Text-3.png" alt="logo-uan">
+    </div>
+    <div class="event-img">
+        <img src="images/Text2.png" alt="logo-uan">
+    </div>
+</header> -->
+
+<div class="container">
+    <div class="slotwrapper" id="spinner"></div>
+    <div>
+        <button type="button" class="btn btn-lg" id="btn-start">Bắt đầu quay</button>
+        <button type="button" class="btn btn-lg" disabled id="btn-stop">Dừng!</button>
     </div>
 
-    <!-- <header class="header-slotmachine">
-        <div class="event-img">
-            <img src="images/Text1.png" alt="logo-uan">
-        </div>
-        <div class="event-img">
-            <img src="images/Text-3.png" alt="logo-uan">
-        </div>
-        <div class="event-img">
-            <img src="images/Text2.png" alt="logo-uan">
-        </div>
-    </header> -->
+</div>
+</div>
 
-    <div class="container">
-        <div class="slotwrapper" id="spinner"></div>
-        <div>
-            <button type="button" class="btn btn-lg" id="btn-start">Bắt đầu quay</button>
-            <button type="button" class="btn btn-lg" disabled id="btn-stop">Dừng!</button>
-        </div>
+</div>
 
-    </div>
-    </div>
-
-    </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
-    <script src="js/slotmachine.js"></script>
-    <script src="js/jquery-ui.js"></script>
+<script src="js/slotmachine.js"></script>
+<script src="js/jquery-ui.js"></script>
 
-    <script type="text/javascript">
-        var isSpinning = false;
+<script type="text/javascript">
+    var isSpinning = false;
 
-        // var sound = new Audio('ringtones/rolling.mp3');
-        var sound = new Audio('ringtones/spinning.mp3');
-        var ding = new Audio('ringtones/ding.wav');
-        sound.addEventListener('ended', function () {
-            this.currentTime = 0;
-            this.play();
-        }, false);
+    // var sound = new Audio('ringtones/rolling.mp3');
+    var sound = new Audio('ringtones/spinning.mp3');
+    var ding = new Audio('ringtones/ding.wav');
+    sound.addEventListener('ended', function () {
+        this.currentTime = 0;
+        this.play();
+    }, false);
 
-        $(document).ready(function () {
-            for (var i = 0; i < 10; i++) {
-                var $slotbox = $('<div>').addClass('slotbox').appendTo('#spinner');
-                var $ul = $('<ul>').appendTo($slotbox);
-                // $('<li>').text('\u00a0').appendTo($ul);
-                for (var j = 0; j < 9; j++) {
-                    $('<li>').text(j + 1).appendTo($ul);
-                }
-                for (var k = 0; k < 17; k++) {
-                    $('<li>').text(String.fromCharCode(65 + k)).appendTo($ul);
-                }
-                $ul.children().first().text('\u00a0');
+    $(document).ready(function () {
+        for (var i = 0; i < 10; i++) {
+            var $slotbox = $('<div>').addClass('slotbox').appendTo('#spinner');
+            var $ul = $('<ul>').appendTo($slotbox);
+            // $('<li>').text('\u00a0').appendTo($ul);
+            for (var j = 0; j < 9; j++) {
+                $('<li>').text(j + 1).appendTo($ul);
+            }
+            for (var k = 0; k < 17; k++) {
+                $('<li>').text(String.fromCharCode(65 + k)).appendTo($ul);
+            }
+            $ul.children().first().text('\u00a0');
 
+        }
+    });
+
+    $('#btn-start').click(function () {
+        sound.play();
+        isSpinning = true;
+        $('#btn-stop').prop('disabled', false);
+        $('#btn-start').prop('disabled', true);
+        $('#spinner ul').playSpin({
+            manualStop: true,
+            stopSeq: 'leftToRight',
+            easing: 'easeOutBack',
+            stopTime: 1500,
+            time: 1500,
+            onEnd: function () {
+                ding.play();
+            },
+            onFinish: function () {
+                sound.pause();
+                isSpinning = false;
+                $('#btn-start').prop('disabled', false);
+                $('#btn-stop').prop('disabled', true);
             }
         });
+    });
 
-        $('#btn-start').click(function () {
-            sound.play();
-            isSpinning = true;
-            $('#btn-stop').prop('disabled', false);
-            $('#btn-start').prop('disabled', true);
-            $('#spinner ul').playSpin({
-                manualStop: true,
-                stopSeq: 'leftToRight',
-                // easing: 'easeOutBack',
-                onEnd: function () {
-                    ding.play();
-                },
-                onFinish: function () {
-                    sound.pause();
-                    isSpinning = false;
-                    $('#btn-start').prop('disabled', false);
-                    $('#btn-stop').prop('disabled', true);
-                }
-            });
-        });
-
-        $('#btn-stop').click(function () {
-            $('#spinner ul').stopSpin();
-            $('#btn-stop').prop('disabled', true);
-        });
+    $('#btn-stop').click(function () {
+        $('#spinner ul').stopSpin();
+        $('#btn-stop').prop('disabled', true);
+    });
 
 
-    </script>
+</script>
 </body>
 
 </html>
