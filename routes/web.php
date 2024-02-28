@@ -29,10 +29,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //    events
     Route::get('/events', [EventController::class, 'index'])->name('events-management');
+    Route::get('/events/download-template', [EventController::class, 'download'])->name('events.download-template');
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events/import', [EventController::class, 'import'])->name('events.import');
+    Route::post('/events/import-with-data', [EventController::class, 'importWithAllData'])->name('events.import-with-data');
 
+    Route::get('/events/all', [EventController::class, 'showAll'])->name('events.all');
+    Route::get('/events/ongoing', [EventController::class, 'showOngoing'])->name('events.ongoing');
+    Route::get('/events/upcoming', [EventController::class, 'showUpcoming'])->name('events.upcoming');
+    Route::get('/events/past', [EventController::class, 'showPast'])->name('events.past');
+    Route::get('/events/filter', [EventController::class, 'filter'])->name('events.filter');
+    Route::get('/events/show-agencies', [EventController::class, 'showAgencies'])->name('events.show-agencies');
+
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
 //    agencies
     Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies-management');
+    Route::get('/agencies/create', [AgencyController::class, 'create'])->name('agencies.create');
+    Route::post('/agencies', [AgencyController::class, 'store'])->name('agencies.store');
+    Route::get('/agencies/{agency}', [AgencyController::class, 'show'])->name('agencies.show');
+    Route::get('/agencies/{agency}/edit', [AgencyController::class, 'edit'])->name('agencies.edit');
+    Route::get('/agencies/filter', [AgencyController::class, 'filter'])->name('agencies.filter');
 
 
 //    prizes

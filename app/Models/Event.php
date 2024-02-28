@@ -10,6 +10,20 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id',
+        'title',
+        'content',
+        'start_date',
+        'end_date',
+        'status',
+    ];
+
+    protected $dates = [
+        'start_date',
+        'end_date',
+    ];
+
     public function agencies(): HasMany
     {
         return $this->hasMany(Agency::class);

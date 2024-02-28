@@ -11,6 +11,15 @@ class Agency extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'keywords',
+        'agency_id',
+        'agency_name',
+        'province',
+        'district',
+        'event_id',
+    ];
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);

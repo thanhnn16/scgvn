@@ -32,6 +32,9 @@ create table events
     id         serial primary key,
     title      varchar(255) not null,
     content    text         not null,
+    start_date date         not null,
+    end_date   date         not null,
+    status     enum('draft', 'published', 'archived') default 'draft' not null,
     created_at timestamp    not null default current_timestamp,
     updated_at timestamp    not null default current_timestamp
 );
@@ -42,7 +45,6 @@ create table agencies
     keywords     varchar(50)  null,
     agency_id    varchar(20)  not null unique,
     agency_name  varchar(255) not null,
-    phone_number varchar(20)  null,
     province     varchar(50),
     district     varchar(50),
     created_at   timestamp    not null default current_timestamp,
@@ -52,14 +54,16 @@ create table agencies
 
 create table prizes
 (
-    id              serial primary key,
+    id         serial primary key,
     prize_name varchar(255) not null,
-    prize_qty   integer      not null,
-    created_at      timestamp    not null default current_timestamp,
-    updated_at      timestamp    not null default current_timestamp,
-    event_id        integer references events (id),
-    agency_id       integer references agencies (id)
+    prize_qty  integer      not null,
+    prize_desc text         null,
+    created_at timestamp    not null default current_timestamp,
+    updated_at timestamp    not null default current_timestamp,
+    event_id   integer references events (id),
+    agency_id  integer references agencies (id)
 );
+
 
 # change timezone to UTC +7
 SET GLOBAL time_zone = '+7:00';

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Models\Event;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AgencyController extends Controller
@@ -10,9 +15,12 @@ class AgencyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        //
+//        return view with all events
+        return view('agencies-management', [
+            'events' => Event::all()
+        ]);
     }
 
     /**
@@ -62,4 +70,9 @@ class AgencyController extends Controller
     {
         //
     }
+//
+//    public function filter(Request $request): JsonResponse
+//    {
+//        return response()->json(Agency::where('event_id', $request->event_id)->get());
+//    }
 }

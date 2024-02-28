@@ -7,29 +7,238 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-emerald-950 font-bold">
-                    {{ __("Chọn sự kiện") }}
-                </div>
-
+            <div class="bg-white min-h-96 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900" id="selectEvents">
-                    <form action="{{ route('agencies-management') }}" method="get">
-                        <select name="event" id="event" class="form-select rounded-md shadow-sm mt-1 block w-1/4">
-                            <option value="0">Chọn sự kiện</option>
-                            @foreach($events as $event)
-                                <option value="{{ $event->id }}">{{ $event->name }}</option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded mt-2">Chọn</button>
-                    </form>
+                    <h3 class="text-xl font-bold">Chọn sự kiện</h3>
+                    <div class="flex items-center mt-3 justify-between">
+                        <div class="w-2/12">
+                            <label for="start_date" class="block text-sm font-medium text-gray-700">Từ ngày</label>
+                            <input type="date" name="start_date" id="start_date"
+                                   class="form-input rounded-md shadow-sm mt-1 block">
+                        </div>
+                        <div class="w-2/12">
+                            <label for="end_date" class="block text-sm font-medium text-gray-700 ml-4">Đến
+                                ngày</label>
+                            <input type="date" name="end_date" id="end_date"
+                                   class="form-input rounded-md shadow-sm mt-1 block">
+                        </div>
+                        <div class="w-7/12">
+                            <label for="end_date" class="block text-sm font-medium text-gray-700 ml-4">Sự kiện</label>
+                            <select name="event" id="event" class="form-select rounded-md mt-1 w-full shadow-sm">
+                                <option value="0">Chọn sự kiện</option>
+                                @foreach($events as $event)
+                                    <option value="{{ $event->id }}">{{ $event->title }}
+                                        - {{ $event->content }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="w-1/12 items-center justify-self-center">
+                            <button type="reset" id="reset"
+                                    class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 mx-2 rounded mt-6">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="p-6 text-emerald-950 font-bold">
+                <div id="agencyListText" class="p-6 text-emerald-950 font-bold hidden">
                     {{ __("Danh sách đại lý") }}
                 </div>
 
+                <div id="emptyList" class="p-6 text-emerald-950 font-bold hidden">
+                    <div class="text-emerald-950 font-bold">
+                        {{ __("Hiện không có đại lý nào trong sự kiện này, bạn có thể:") }}
+                    </div>
+                    <div class="flex items-center justify-start mt-3">
+                        <button
+                                class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
+                            <a href="{{ route('events.create') }}">Thêm đại lý</a></button>
+
+                        <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
+                            <a>Nhập từ Excel (khuyến khích)</a>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-6 text-gray-900">
+                    <table class="min-w-full divide-y divide-gray-200 hidden" id="agencyTable">
+                        <thead>
+                        <tr>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('Nhóm từ khóa') }}
+                            </th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('Mã đại lý') }}
+                            </th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('Tên đại lý') }}
+                            </th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __('Địa chỉ') }}
+                            </th>
+                            <th class="px-6 py-3 bg-gray-50"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="tbody">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-no-wrap">
+                                <div class="text-sm leading-5 text-gray-900">1</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap">
+                                <div class="text-sm leading-5 text-gray-900">1</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap">
+                                <div class="text-sm leading-5 text-gray-900">1</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap">
+                                <div class="text-sm leading-5 text-gray-900">1</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
+                                <a href="#"
+                                   class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
     </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#end_date').change(function () {
+                let start_date = $('#start_date').val();
+                let end_date = $('#end_date').val();
+                if (start_date === '' || end_date === '') {
+                    alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc');
+                } else if (start_date > end_date) {
+                    alert('Ngày bắt đầu không thể lớn hơn ngày kết thúc');
+                    $('#end_date').val('');
+                } else {
+                    getEvents(start_date, end_date);
+                }
+            });
+
+            $('#start_date').change(function () {
+                let start_date = $('#start_date').val();
+                let end_date = $('#end_date').val();
+                if (start_date === '' || end_date === '') {
+                    let today = new Date();
+                    end_date = today.toISOString().slice(0, 10);
+                } else if (start_date > end_date) {
+                    alert('Ngày bắt đầu không thể lớn hơn ngày kết thúc');
+                    $('#start_date').val('');
+                } else {
+                    getEvents(start_date, end_date);
+                }
+            });
+
+            $('#event').change(function () {
+                let event_id = $('#event').val();
+                if ($('#event').val() === '0') {
+                    $('#agencyListText').addClass('hidden');
+                    $('#agencyTable').addClass('hidden');
+                } else {
+                    console.log(event_id)
+                    getAgencies(event_id);
+                }
+            });
+
+
+            $('#reset').click(function () {
+                $('#start_date').val('');
+                $('#end_date').val('');
+                $('#event').val(0);
+                $('#agencyListText').addClass('hidden');
+                $('#agencyTable').addClass('hidden');
+                $('#emptyList').addClass('hidden');
+            });
+
+            function getEvents(start_date, end_date) {
+                $.ajax({
+                    url: '{{ route('events.filter') }}',
+                    type: 'GET',
+                    data: {
+                        start_date: start_date,
+                        end_date: end_date,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if (data.length === 0) {
+                            alert('Không có sự kiện nào trong khoảng thời gian này');
+                        }
+
+                        $('#event').empty();
+                        $('#event').append('<option value="0">Chọn sự kiện</option>');
+                        $.each(data, function (index, value) {
+                            $('#event').append('<option value="' + value.id + '">' + value.title + ' - ' + value.content + '</option>');
+                        });
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            function getAgencies(event_id) {
+                $.ajax({
+                    url: '{{ route('events.show-agencies') }}',
+                    type: 'GET',
+                    data: {
+                        event_id: event_id,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if (data.length === 0) {
+                            console.log('Không có đại lý nào trong sự kiện này');
+                            $('#agencyListText').addClass('hidden');
+                            $('#agencyTable').addClass('hidden');
+                            $('#emptyList').removeClass('hidden');
+                            return;
+                        }
+
+                        $('#emptyList').addClass('hidden');
+                        $('#agencyListText').removeClass('hidden');
+                        $('#agencyTable').removeClass('hidden');
+                        $('#tbody').empty();
+                        $.each(data, function (index, value) {
+                            $('#tbody').append('<tr>' +
+                                '<td class="px-6 py-4 whitespace-no-wrap">' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.keywords + '</div>' +
+                                '</td>' +
+                                '<td class="px-6 py-4 whitespace-no-wrap">' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.agency_id + '</div>' +
+                                '</td>' +
+                                '<td class="px-6 py-4 whitespace-no-wrap">' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.agency_name + '</div>' +
+                                '</td>' +
+                                '<td class="px-6 py-4 whitespace-no-wrap">' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.district + ' - ' + value.province + '</div>' +
+                                '</td>' +
+                                '<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">' +
+                                '<a href="#" class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>' +
+                                '</td>' +
+                                '</tr>');
+                        });
+
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+
+        });
+    </script>
 </x-app-layout>

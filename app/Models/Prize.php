@@ -10,6 +10,14 @@ class Prize extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'prize_name',
+        'prize_qty',
+        'prize_desc',
+        'event_id',
+        'agency_id',
+    ];
+
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
