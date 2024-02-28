@@ -59,6 +59,7 @@
 <script type="text/javascript">
     let isSpinning = false;
     let slotArrays = [];
+    let isFirstSpin = true;
 
     // let sound = new Audio('ringtones/rolling.mp3');
     let sound = new Audio('ringtones/spinning.mp3');
@@ -97,13 +98,15 @@
     function startSpin() {
         $('.btn-toggle').text('Dừng quay').attr('id', 'btn-stop');
 
-        $('#spinner ul li:first-child').remove();
+        if (isFirstSpin) {
+            $('#spinner ul li:first-child').remove();
+            isFirstSpin = false;
+        }
 
         let result = [];
 
         for (let i = 0; i < 20; i++) {
-            result.push(Math.floor(Math.random() * slotArrays[i].length) + 1);
-            // result.push(1);
+            result.push(Math.floor(Math.random() * slotArrays[i].length));
         }
 
         let resultString = '';
@@ -112,8 +115,8 @@
             resultString += slotArrays[i][result[i]];
         }
 
-        console.log(result)
-        console.log(resultString)
+        console.log(`Mang result: ${result}`);
+        console.log(`String result: ${resultString}`);
 
         sound.play();
         isSpinning = true;
