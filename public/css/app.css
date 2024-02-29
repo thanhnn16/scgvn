@@ -1,5 +1,5 @@
 body {
-    background-image: url('../images/aisle-blur.jpg');
+    background-image: url('../images/bg.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -13,23 +13,21 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
 }
 
 
 #logo {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: 1.2rem;
+    margin-bottom: 2.5rem;
     text-align: center;
 }
 
 #logo img {
-    width: 350px;
-    height: auto;
+    width: 300px;
+    height: 150px;
     margin: 0 auto;
     object-fit: cover;
 }

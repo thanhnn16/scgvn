@@ -8,3 +8,5 @@ _**TODO:**_
 - Sửa trang dashboard admin.
 - Thêm chức năng sửa, xóa sự kiện/đại lý/quà tặng.
 - Thêm trang thêm sự kiện/đại lý/quà tặng.
+- Dulicate sự kiện
+- Giao diện danh sách trúng thưởng và đại lý

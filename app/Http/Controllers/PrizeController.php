@@ -12,7 +12,7 @@ class PrizeController extends Controller
      */
     public function index()
     {
-        return view('prizes-management');
+        return view('prizes.prizes-management');
     }
 
     /**

@@ -1,31 +1,31 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 
 <head>
     <title>SCG - Quay thưởng</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="d58Et_hG0KrLc6xKv03J8U5NA6jqak0kCFxBaz7Y1MM"/>
-    <link rel="icon" href="images/logo.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/logo.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/logo.svg">
+    <link rel="icon" href="../images/logo.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/logo.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/logo.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
     <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&amp;display=swap"
             rel="stylesheet">
-    <link rel="stylesheet" href="css/jquery-ui.min.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="../css/jquery-ui.min.css">
+    <link rel="stylesheet" href="../css/app.css">
 </head>
 
 <body>
-<div id="logo">
-    <img src="images/logo.svg" alt="logo">
-</div>
 
 <div class="container-machine">
+    <div id="logo">
+        <img src="../images/logo.svg" alt="logo">
+    </div>
     <div class="slotwrapper" id="spinner"></div>
     <div>
-        <button type="button" class="btn btn-lg btn-toggle" id="btn-start">Bắt đầu quay</button>
+        <button type="button" class="btn mt-3 btn-lg btn-toggle" id="btn-start">Bắt đầu quay</button>
     </div>
 
     <div id="prize-container"></div>
@@ -53,17 +53,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="js/slotmachine.js"></script>
-<script src="js/jquery-ui.js"></script>
+<script src="../js/slotmachine.js"></script>
+<script src="../js/jquery-ui.js"></script>
 
 <script type="text/javascript">
     let isSpinning = false;
     let slotArrays = [];
     let isFirstSpin = true;
 
+    console.log(`Event from spinner.index.blade.php`, @json($event->agencies));
+
     // let sound = new Audio('ringtones/rolling.mp3');
-    let sound = new Audio('ringtones/spinning.mp3');
-    let ding = new Audio('ringtones/ding.wav');
+    let sound = new Audio('../ringtones/spinning.mp3');
+    let ding = new Audio('../ringtones/ding.wav');
 
     sound.addEventListener('ended', function () {
         this.currentTime = 0;

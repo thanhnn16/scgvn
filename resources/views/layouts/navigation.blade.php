@@ -39,7 +39,7 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('spinner.management')">
+                    <x-nav-link :href="route('spinner.management')" :active="request()->routeIs('spinner.management')">
                         {{ __('SCG PRIZE SPINNER ') }}
                     </x-nav-link>
                 </div>

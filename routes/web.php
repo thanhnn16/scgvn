@@ -4,6 +4,7 @@ use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpinnerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,10 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes-management');
 
 //    spinner
-    Route::get('/spinner-management', function () {
-        return view('spinner');
-    })->name('spinner.management');
-
+    Route::get('/spinner-management', [SpinnerController::class, 'index'])->name('spinner.management');
+    Route::get('/spinner/{event}', [SpinnerController::class, 'show'])->name('spinner.show');
 
 //    index
     Route::get('/', function () {

@@ -18,7 +18,7 @@ class AgencyController extends Controller
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
 //        return view with all events
-        return view('agencies-management', [
+        return view('agencies.agencies-management', [
             'events' => Event::all()
         ]);
     }
