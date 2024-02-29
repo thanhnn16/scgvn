@@ -1,6 +1,7 @@
 _**TODO:**_
 - Thêm trang chọn event trước khi quay.
-- Thêm trang xem chi tiết event.
+- Thêm trang xem chi tiết event
+    - Hoàn thiện: giao diện hiển thị.
 - Thêm trang xem chi tiết đại lý.
 - Thêm trang xem chi tiết quà tặng.
 - Sửa trang profile admin.

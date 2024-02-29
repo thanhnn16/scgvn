@@ -23,7 +23,7 @@ class EventController extends Controller
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $events = Event::all();
-        return view('events-management', compact('events'));
+        return view('events.events-management', compact('events'));
     }
 
     /**
@@ -45,9 +45,12 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(Event $event): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        $prizes = $event->load('prizes');
+        $agencies = $event->agencies->load('prizes');
+
+        return view('events.event-detail', compact(['event','prizes', 'agencies']));
     }
 
     /**

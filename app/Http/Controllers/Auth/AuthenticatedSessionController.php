@@ -25,11 +25,18 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+//        $request->authenticate();
+//
+//        $request->session()->regenerate();
+//
+//        return redirect()->intended(RouteServiceProvider::HOME);
+        try {
+            $request->authenticate();
+            $request->session()->regenerate();
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } catch (\Exception $e) {
+            return redirect('/login')->with('error', 'Sai tên đăng nhập hoặc mật khẩu');
+        }
     }
 
     /**

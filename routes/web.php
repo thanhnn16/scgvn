@@ -55,11 +55,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //    prizes
     Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes-management');
 
+//    spinner
+    Route::get('/spinner-management', function () {
+        return view('spinner');
+    })->name('spinner.management');
+
 
 //    index
     Route::get('/', function () {
-        return view('index');
-    })->name('index');
+        return view('dashboard');
+    });
 });
 
 require __DIR__ . '/auth.php';
