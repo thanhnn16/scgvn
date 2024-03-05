@@ -12,28 +12,34 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs(['dashboard', 'index'])">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('events-management')" :active="request()->routeIs('events-management')">
+                    <x-nav-link :href="route('events-management')" :active="request()->routeIs(['events-management', 'events.show'])">
                         {{ __('Quản lý sự kiện') }}
                     </x-nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('agencies-management')" :active="request()->routeIs('agencies-management')">
-                        {{ __('Dữ liệu đại lý') }}
+                    <x-nav-link :href="route('events-history')" :active="request()->routeIs('events-history')">
+                        {{ __('Lịch sử quay thưởng') }}
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('prizes-management')" :active="request()->routeIs('prizes-management')">
-                        {{ __('Dữ liệu phần thưởng') }}
-                    </x-nav-link>
-                </div>
+{{--                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">--}}
+{{--                    <x-nav-link :href="route('agencies-management')" :active="request()->routeIs('agencies-management')">--}}
+{{--                        {{ __('Dữ liệu đại lý') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                </div>--}}
+
+{{--                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">--}}
+{{--                    <x-nav-link :href="route('prizes-management')" :active="request()->routeIs('prizes-management')">--}}
+{{--                        {{ __('Dữ liệu phần thưởng') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                </div>--}}
             </div>
 
             <!-- Settings Dropdown -->

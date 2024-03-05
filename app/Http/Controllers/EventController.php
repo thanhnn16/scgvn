@@ -22,7 +22,7 @@ class EventController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $events = Event::all();
+        $events = Event::all()->load(['agencies', 'prizes']);
         return view('events.events-management', compact('events'));
     }
 
@@ -50,7 +50,7 @@ class EventController extends Controller
         $prizes = $event->load('prizes');
         $agencies = $event->agencies->load('prizes');
 
-        return view('events.event-detail', compact(['event','prizes', 'agencies']));
+        return view('events.event-detail', compact(['event', 'prizes', 'agencies']));
     }
 
     /**
@@ -66,7 +66,12 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+        try {
+            $event->update($request->all());
+            return response()->json(['status' => 'success', 'message' => 'Cập nhật sự kiện thành công!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -75,6 +80,13 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+
+    public function eventHistory()
+    {
+        $events = Event::all()->load(['agencies', 'prizes']);
+        return view('events.events-history', compact('events'));
     }
 
     /**
@@ -128,6 +140,8 @@ class EventController extends Controller
     public function showAll(): JsonResponse
     {
         $events = Event::all();
+        $events->load('agencies');
+        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -135,6 +149,8 @@ class EventController extends Controller
     function showOngoing(): JsonResponse
     {
         $events = Event::whereBetween('start_date', [now(), now()->addDays(10)])->get();
+        $events->load('agencies');
+        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -142,6 +158,8 @@ class EventController extends Controller
     function showUpcoming(): JsonResponse
     {
         $events = Event::where('start_date', '>', now())->get();
+        $events->load('agencies');
+        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -151,6 +169,8 @@ class EventController extends Controller
         $events = Event::where('end_date', '<', now())
             ->where('start_date', '<', now())
             ->get();
+        $events->load('agencies');
+        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -160,18 +180,21 @@ class EventController extends Controller
         $events = Event::where('start_date', '>=', $request->start_date)
             ->where('end_date', '<=', $request->end_date)
             ->get();
+        $events->load('agencies');
+        $events->load('prizes');
         return response()->json($events);
     }
 
     public
-    function showAgencies(Request $request): JsonResponse
+    function getEventData(Request $request): JsonResponse
     {
         try {
             $event_id = $request->event_id;
             $event = Event::find($event_id);
             $agencies = $event->agencies;
+            $prizes = $event->prizes;
 
-            return response()->json($agencies);
+            return response()->json(['agencies' => $agencies, 'prizes' => $prizes]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

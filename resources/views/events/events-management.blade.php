@@ -46,28 +46,28 @@
                         <thead class="bg-gray-50">
                         <tr>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Tên sự kiện
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Nội dung
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Thời gian
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Số lượng đại lý
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Đại lý tham gia
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Trạng thái
                             </th>
                             <th scope="col"
-                                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Chi tiết
+                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Hành động
                             </th>
                         </tr>
                         </thead>
@@ -75,25 +75,24 @@
                         @foreach($events as $event)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $event->title }}</div>
+                                    <div class="text-sm text-center text-gray-900">{{ $event->title }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
                                     <div class="text-sm text-gray-900">{{ $event->content }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ Carbon::parse($event->start_date)->format('d/m/Y') }}
+                                    <div class="text-sm text-center text-gray-900">{{ Carbon::parse($event->start_date)->format('d/m/Y') }}
                                         - {{ Carbon::parse($event->end_date)->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>
+                                    <div class="text-sm text-center text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ $event->status }}</div>
+                                    <div class="text-sm text-center text-gray-900">{{ $event->status }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="{{ route('events.show', $event->id) }}"
                                        class="text-itext-slate-600 hover:text-red-700">Xem chi tiết</a>
-
                                 </td>
                             </tr>
                         @endforeach
@@ -136,27 +135,27 @@
                                 </a>
                                 để tải file excel mẫu
                             </p>
-                            <form class="space-y-4" method="POST" action="{{ route('events.import') }}"
-                                  enctype="multipart/form-data">
-                                @csrf
-                                <div class="flex flex-col">
-                                    <input type="file" name="file" id="file" accept=".xlsx, .xls"
-                                           class="form-input px-2">
-                                </div>
+{{--                            <form class="space-y-4" method="POST" action="{{ route('events.import') }}"--}}
+{{--                                  enctype="multipart/form-data">--}}
+{{--                                @csrf--}}
+{{--                                <div class="flex flex-col">--}}
+{{--                                    <input type="file" name="file" id="file" accept=".xlsx, .xls"--}}
+{{--                                           class="form-input px-2">--}}
+{{--                                </div>--}}
 
-                                <div class="flex items
-                                -center justify-end space-x-2">
-                                    <button type="submit"
-                                            class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
-                                        Chỉ sự kiện
-                                    </button>
-                                    <button type="button"
-                                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                                            data-modal-hide="uploadModal">
-                                        Hủy
-                                    </button>
-                                </div>
-                            </form>
+{{--                                <div class="flex items--}}
+{{--                                -center justify-end space-x-2">--}}
+{{--                                    <button type="submit"--}}
+{{--                                            class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">--}}
+{{--                                        Chỉ sự kiện--}}
+{{--                                    </button>--}}
+{{--                                    <button type="button"--}}
+{{--                                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"--}}
+{{--                                            data-modal-hide="uploadModal">--}}
+{{--                                        Hủy--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                            </form>--}}
 
                             <form class="space-y-4" method="POST" action="{{ route('events.import-with-data') }}"
                                   enctype="multipart/form-data">
@@ -170,7 +169,7 @@
                                 -center justify-end space-x-2">
                                     <button type="submit"
                                             class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">
-                                        Kèm với data
+                                        Tải lên
                                     </button>
                                     <button type="button"
                                             class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
@@ -218,30 +217,34 @@
 
 
         function createEventHTML(event) {
+            let agenciesLength = event.agencies.length;
+            let eventId = event.id;
+
+
             return `
         <tr>
             <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">${event.title}</div>
+                <div class="text-sm text-center text-gray-900">${event.title}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
                 <div class="text-sm text-gray-900">${event.content}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-    <div class="text-sm text-gray-900">
+    <div class="text-sm text-center text-gray-900">
         ${new Date(event.start_date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })} - ${new Date(event.end_date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}
     </div>
 </td>
             <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">${event.agencies_count ?? 0} </div>
+                <div class="text-sm text-center text-gray-900">${agenciesLength ?? 0} </div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">${event.status} </div>
+                <div class="text-sm text-center text-gray-900">${event.status} </div>
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <button data-modal-show="eventDetailModal" data-modal-target="eventDetailModal"
-                        class="text-indigo-600 hover:text-indigo-900">Xem chi tiết
-                </button>
+            <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                <a href="events/${eventId}"
+                                       class="text-itext-slate-600 hover:text-red-700">Xem chi tiết</a>
             </td>
+
         </tr>
     `;
         }

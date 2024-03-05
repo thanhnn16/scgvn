@@ -2,11 +2,11 @@ body {
     background-image: url('../images/bg.png');
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
     background-position: center;
-    position: relative;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .container-machine {
@@ -35,7 +35,7 @@ body {
 .slotwrapper {
     overflow: hidden;
     display: flex;
-    height: 70px;
+    height: 80px;
     margin: 0 auto 20px;
     text-align: center;
     position: relative;
@@ -51,8 +51,8 @@ body {
     display: inline-block;
     position: relative;
     border-radius: 12%;
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     z-index: 99;
 }
 
@@ -63,11 +63,12 @@ body {
     position: relative;
     float: left;
 }
+
 .slotwrapper ul {
-    width: 70px;
-    height:70px;
-    font-size: 60px;
-    line-height: 70px;
+    width: 80px;
+    height: 80px;
+    font-size: 70px;
+    line-height: 80px;
     text-align: center;
     color: red;
     font-weight: 600;
@@ -137,17 +138,31 @@ body {
     .slotwrapper {
         width: 100%;
     }
+
     .slotwrapper ul {
         width: 33%;
     }
 }
+
 @media screen and (max-width: 768px) {
     .slotwrapper {
         height: 100px;
     }
+
     .slotwrapper ul {
-        height:100px;
+        height: 100px;
         font-size: 100px;
         line-height: 100px;
     }
+}
+
+canvas {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }

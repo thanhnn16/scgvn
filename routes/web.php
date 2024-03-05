@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/form-dang-ky', function () {
+    return view('forms.reg-form');
+})->name('forms.dang-ky');
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -30,17 +35,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //    events
     Route::get('/events', [EventController::class, 'index'])->name('events-management');
+    Route::get('/events/history', [EventController::class, 'eventHistory'])->name('events-history');
     Route::get('/events/download-template', [EventController::class, 'download'])->name('events.download-template');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/import', [EventController::class, 'import'])->name('events.import');
     Route::post('/events/import-with-data', [EventController::class, 'importWithAllData'])->name('events.import-with-data');
+
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
 
     Route::get('/events/all', [EventController::class, 'showAll'])->name('events.all');
     Route::get('/events/ongoing', [EventController::class, 'showOngoing'])->name('events.ongoing');
     Route::get('/events/upcoming', [EventController::class, 'showUpcoming'])->name('events.upcoming');
     Route::get('/events/past', [EventController::class, 'showPast'])->name('events.past');
     Route::get('/events/filter', [EventController::class, 'filter'])->name('events.filter');
-    Route::get('/events/show-agencies', [EventController::class, 'showAgencies'])->name('events.show-agencies');
+    Route::get('/events/detail', [EventController::class, 'getEventData'])->name('events.get-data');
 
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
@@ -63,7 +72,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //    index
     Route::get('/', function () {
         return view('dashboard');
-    });
+    })->name('dashboard');
 });
 
 require __DIR__ . '/auth.php';
