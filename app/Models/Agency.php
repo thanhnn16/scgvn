@@ -5,28 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Agency extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'agency_id';
 
     protected $fillable = [
         'keywords',
         'agency_id',
         'agency_name',
-        'province',
-        'district',
+        'province_id',
         'event_id',
     ];
 
-    public function event(): BelongsTo
+    public function events(): BelongsToMany
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsToMany(Event::class, 'event_agencies', 'agency_id', 'event_id');
     }
 
-    public function prizes(): HasMany
+    public function province(): BelongsTo
     {
-        return $this->hasMany(Prize::class);
+        return $this->belongsTo(Province::class);
     }
 }

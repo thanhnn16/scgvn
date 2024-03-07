@@ -85,7 +85,7 @@
                                         - {{ Carbon::parse($event->end_date)->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>
+{{--                                    <div class="text-sm text-center text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>--}}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">{{ $event->status }}</div>
@@ -161,7 +161,7 @@
                                   enctype="multipart/form-data">
                                 @csrf
                                 <div class="flex flex-col">
-                                    <input type="file" name="file" id="file" accept=".xlsx, .xls"
+                                    <input type="file" required name="file" id="file" accept=".xlsx, .xls"
                                            class="form-input px-2">
                                 </div>
 

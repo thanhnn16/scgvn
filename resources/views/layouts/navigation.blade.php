@@ -29,11 +29,11 @@
                     </x-nav-link>
                 </div>
 
-{{--                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">--}}
-{{--                    <x-nav-link :href="route('agencies-management')" :active="request()->routeIs('agencies-management')">--}}
-{{--                        {{ __('Dữ liệu đại lý') }}--}}
-{{--                    </x-nav-link>--}}
-{{--                </div>--}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('agencies-management')" :active="request()->routeIs('agencies-management')">
+                        {{ __('Dữ liệu đại lý') }}
+                    </x-nav-link>
+                </div>
 
 {{--                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">--}}
 {{--                    <x-nav-link :href="route('prizes-management')" :active="request()->routeIs('prizes-management')">--}}

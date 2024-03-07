@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
@@ -19,14 +20,9 @@ class Event extends Model
         'status',
     ];
 
-    protected $dates = [
-        'start_date',
-        'end_date',
-    ];
-
-    public function agencies(): HasMany
+    public function agencies(): BelongsToMany
     {
-        return $this->hasMany(Agency::class);
+        return $this->belongsToMany(Agency::class, 'event_agencies', 'event_id', 'agency_id');
     }
 
     public function prizes(): HasMany

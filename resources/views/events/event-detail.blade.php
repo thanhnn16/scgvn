@@ -147,32 +147,31 @@
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="tbody">
-                        @foreach($agencies as $agency)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->keywords }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency_id }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency_name }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->district }}
-                                        - {{ $agency->province }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->prize ?? '-' }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">
-                                    <a href="#" id="editAgency"
-                                       class="text-slate-600 hover:text-blue-600">Sửa</a> -
-                                    <a href="#" id="{{ $agency->id }}"
-                                       class="text-slate-600 hover:text-red-900 deleteAgency">Xóa</a>
-                                </td>
-                            </tr>
-                        @endforeach
+{{--                        @foreach($agencies as $agency)--}}
+{{--                            <tr>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->keywords }}</div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency_id }}</div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency_name }}</div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->province_id }}</div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->prize ?? '-' }}</div>--}}
+{{--                                </td>--}}
+{{--                                <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">--}}
+{{--                                    <a href="#" id="editAgency"--}}
+{{--                                       class="text-slate-600 hover:text-blue-600">Sửa</a> ---}}
+{{--                                    <a href="#" id="{{ $agency->id }}"--}}
+{{--                                       class="text-slate-600 hover:text-red-900 deleteAgency">Xóa</a>--}}
+{{--                                </td>--}}
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
                         </tbody>
                     </table>
                 </div>
@@ -191,71 +190,71 @@
                     {{ __("Danh sách giải thưởng") }}
                 </div>
 
-                @if ($prizes->count() === 0)
-                    <div id="emptyList" class="p-6 text-emerald-950 font-bold">
-                        <div class="text-emerald-950 font-bold">
-                            {{ __("Hiện không có danh sách phần thưởng trong sự kiện này, bạn có thể:") }}
-                        </div>
-                        <div class="flex items-center justify-start mt-3">
-                            <button
-                                    class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
-                                <a href="{{ route('events.create') }}">Thêm phần thưởng</a></button>
+{{--                @if ($prizes->count() === 0)--}}
+{{--                    <div id="emptyList" class="p-6 text-emerald-950 font-bold">--}}
+{{--                        <div class="text-emerald-950 font-bold">--}}
+{{--                            {{ __("Hiện không có danh sách phần thưởng trong sự kiện này, bạn có thể:") }}--}}
+{{--                        </div>--}}
+{{--                        <div class="flex items-center justify-start mt-3">--}}
+{{--                            <button--}}
+{{--                                    class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">--}}
+{{--                                <a href="{{ route('events.create') }}">Thêm phần thưởng</a></button>--}}
 
-                            <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
-                                <a>Nhập từ Excel (khuyến khích)</a>
-                            </button>
-                        </div>
-                    </div>
-                @else
-                    <div class="p-6 text-gray-900">
-                        <table class="min-w-full divide-y divide-gray-200" id="agencyTable">
-                            <thead>
-                            <tr>
-                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('Tên giải thưởng') }}
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('Số lượng') }}
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('Mô tả') }}
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('Đại lý trúng giải') }}
-                                </th>
-                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                    {{ __('Hành động') }}
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" id="tbody">
-                            @foreach($event->prizes as $prize)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_name }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_qty }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_desc }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                        <div class="text-sm leading-5 text-gray-900">
-                                            {{ $prize->agency_id ? $prize->agency->agency_name : '-' }}
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">
-                                        <a href="#" id="editPrize"
-                                           class="text-slate-600 hover:text-blue-600">Sửa</a> -
-                                        <a href="#" id="{{ $prize->id }}"
-                                           class="text-slate-600 hover:text-red-900 deletePrize">Xóa</a>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        @endif
+{{--                            <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">--}}
+{{--                                <a>Nhập từ Excel (khuyến khích)</a>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @else--}}
+{{--                    <div class="p-6 text-gray-900">--}}
+{{--                        <table class="min-w-full divide-y divide-gray-200" id="agencyTable">--}}
+{{--                            <thead>--}}
+{{--                            <tr>--}}
+{{--                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">--}}
+{{--                                    {{ __('Tên giải thưởng') }}--}}
+{{--                                </th>--}}
+{{--                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">--}}
+{{--                                    {{ __('Số lượng') }}--}}
+{{--                                </th>--}}
+{{--                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">--}}
+{{--                                    {{ __('Mô tả') }}--}}
+{{--                                </th>--}}
+{{--                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">--}}
+{{--                                    {{ __('Đại lý trúng giải') }}--}}
+{{--                                </th>--}}
+{{--                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">--}}
+{{--                                    {{ __('Hành động') }}--}}
+{{--                                </th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody class="bg-white divide-y divide-gray-200" id="tbody">--}}
+{{--                            @foreach($event->prizes as $prize)--}}
+{{--                                <tr>--}}
+{{--                                    <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_name }}</div>--}}
+{{--                                    </td>--}}
+{{--                                    <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_qty }}</div>--}}
+{{--                                    </td>--}}
+{{--                                    <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_desc }}</div>--}}
+{{--                                    </td>--}}
+{{--                                    <td class="px-6 py-4 whitespace-no-wrap text-center">--}}
+{{--                                        <div class="text-sm leading-5 text-gray-900">--}}
+{{--                                            {{ $prize->agency_id ? $prize->agency->agency_name : '-' }}--}}
+{{--                                        </div>--}}
+{{--                                    </td>--}}
+{{--                                    <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">--}}
+{{--                                        <a href="#" id="editPrize"--}}
+{{--                                           class="text-slate-600 hover:text-blue-600">Sửa</a> ---}}
+{{--                                        <a href="#" id="{{ $prize->id }}"--}}
+{{--                                           class="text-slate-600 hover:text-red-900 deletePrize">Xóa</a>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                        @endif--}}
                     </div>
             </div>
         </div>
@@ -377,6 +376,10 @@
         $(document).ready(function () {
             $('#saveUpdateEvent').on('click', function (e) {
                 e.preventDefault();
+                if ($('#start_date').val() > $('#end_date').val()) {
+                    alert('Ngày bắt đầu không thể lớn hơn ngày kết thúc');
+                    return;
+                }
                 saveUpdateEvent();
             });
 

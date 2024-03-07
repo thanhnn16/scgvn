@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\EventsImport;
-use App\Imports\EventsWithRelationsImport;
+use App\Imports\EventDataImport;
 use App\Models\Event;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -22,7 +22,7 @@ class EventController extends Controller
      */
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $events = Event::all()->load(['agencies', 'prizes']);
+        $events = Event::all();
         return view('events.events-management', compact('events'));
     }
 
@@ -47,10 +47,7 @@ class EventController extends Controller
      */
     public function show(Event $event): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $prizes = $event->load('prizes');
-        $agencies = $event->agencies->load('prizes');
-
-        return view('events.event-detail', compact(['event', 'prizes', 'agencies']));
+        return view('events.event-detail', compact(['event']));
     }
 
     /**
@@ -130,7 +127,7 @@ class EventController extends Controller
                 'file' => 'required|mimes:xlsx,xls'
             ]);
             $file = $request->file('file');
-            Excel::import(new EventsWithRelationsImport, $file);
+            Excel::import(new EventDataImport, $file);
             return redirect('/events')->with('success', 'Nhập sự kiện thành công! Vui lòng bấm vào Xem chi tiết để kiểm tra');
         } catch (Exception $e) {
             return redirect('/events')->with('error', $e->getMessage());

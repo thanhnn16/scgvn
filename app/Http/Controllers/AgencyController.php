@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Models\AgencyList;
 use App\Models\Event;
+use App\Models\Province;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,9 +19,10 @@ class AgencyController extends Controller
      */
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-//        return view with all events
+        $provinces = Province::all();
+        $provinces->load(['agencies', 'distributors']);
         return view('agencies.agencies-management', [
-            'events' => Event::all()
+            'provinces' => $provinces,
         ]);
     }
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\SpinnerController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/history', [EventController::class, 'eventHistory'])->name('events-history');
     Route::get('/events/download-template', [EventController::class, 'download'])->name('events.download-template');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
-    Route::post('/events/import', [EventController::class, 'import'])->name('events.import');
     Route::post('/events/import-with-data', [EventController::class, 'importWithAllData'])->name('events.import-with-data');
 
     Route::post('/events', [EventController::class, 'store'])->name('events.store');
@@ -52,6 +52,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/detail', [EventController::class, 'getEventData'])->name('events.get-data');
 
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+
+//    provinces
+    Route::post('/provinces/import', [ProvinceController::class, 'import'])->name('provinces.import');
 
 //    agencies
     Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies-management');
@@ -68,6 +71,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //    spinner
     Route::get('/spinner-management', [SpinnerController::class, 'index'])->name('spinner.management');
     Route::get('/spinner/{event}', [SpinnerController::class, 'show'])->name('spinner.show');
+
+//    backup
+    Route::post('/backup', [EventController::class, 'backup'])->name('backup');
 
 //    index
     Route::get('/', function () {
