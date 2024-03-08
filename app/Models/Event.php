@@ -29,4 +29,9 @@ class Event extends Model
     {
         return $this->hasMany(Prize::class);
     }
+
+    public function eventAgencies(): HasMany
+    {
+        return $this->hasMany(EventAgency::class);
+    }
 }

@@ -27,10 +27,10 @@
         </button>
     </div>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-6">
+        <div class="max-w-8xl mx-auto sm:px-2 lg:px-4">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
+                <div class="px-6 pt-6 text-gray-900">
                     <a href="#" class="event-link mx-2 px-1 text-green-500 font-bold"
                        data-url="{{ route('events.all') }}">{{ __("Tất cả") }}</a>
                     <a href="#" class="event-link mx-2 px-1"
@@ -41,7 +41,11 @@
                        data-url="{{ route('events.past') }}">{{ __("Đã diễn ra") }}</a>
                 </div>
 
-                <div class="p-6 text-gray-900">
+                <div class="search my-2 mx-6">
+                    <input type="text" class="form-input rounded-md w-full shadow-sm" id="search"
+                           placeholder="Tìm kiếm">
+                </div>
+                <div class="mt-2 px-2 text-gray-900">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                         <tr>
@@ -85,10 +89,21 @@
                                         - {{ Carbon::parse($event->end_date)->format('d/m/Y') }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-{{--                                    <div class="text-sm text-center text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>--}}
+                                    <div class="text-sm text-center text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $event->status }}</div>
+                                    <div class="text-sm text-center text-gray-900">
+                                        @switch($event->status)
+                                            @case('draft')
+                                                Nháp
+                                                @break
+                                            @case('published')
+                                                Xuất bản
+                                                @break
+                                            @default
+                                                Lưu trữ
+                                        @endswitch
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <a href="{{ route('events.show', $event->id) }}"
@@ -135,28 +150,6 @@
                                 </a>
                                 để tải file excel mẫu
                             </p>
-{{--                            <form class="space-y-4" method="POST" action="{{ route('events.import') }}"--}}
-{{--                                  enctype="multipart/form-data">--}}
-{{--                                @csrf--}}
-{{--                                <div class="flex flex-col">--}}
-{{--                                    <input type="file" name="file" id="file" accept=".xlsx, .xls"--}}
-{{--                                           class="form-input px-2">--}}
-{{--                                </div>--}}
-
-{{--                                <div class="flex items--}}
-{{--                                -center justify-end space-x-2">--}}
-{{--                                    <button type="submit"--}}
-{{--                                            class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded">--}}
-{{--                                        Chỉ sự kiện--}}
-{{--                                    </button>--}}
-{{--                                    <button type="button"--}}
-{{--                                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"--}}
-{{--                                            data-modal-hide="uploadModal">--}}
-{{--                                        Hủy--}}
-{{--                                    </button>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-
                             <form class="space-y-4" method="POST" action="{{ route('events.import-with-data') }}"
                                   enctype="multipart/form-data">
                                 @csrf
@@ -213,6 +206,13 @@
                     }
                 });
             });
+
+            $('#search').on('keyup', function () {
+                let value = $(this).val().toLowerCase();
+                $('tbody tr').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
         });
 
 
@@ -231,7 +231,15 @@
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
     <div class="text-sm text-center text-gray-900">
-        ${new Date(event.start_date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })} - ${new Date(event.end_date).toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+        ${new Date(event.start_date).toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            })} - ${new Date(event.end_date).toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            })}
     </div>
 </td>
             <td class="px-6 py-4 whitespace-nowrap">

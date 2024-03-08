@@ -30,4 +30,14 @@ class Agency extends Model
     {
         return $this->belongsTo(Province::class);
     }
+
+    public function prizes(): BelongsToMany
+    {
+        return $this->belongsToMany(Prize::class, 'event_agencies',  'prize_id');
+    }
+
+    public function eventAgencies(): HasMany
+    {
+        return $this->hasMany(EventAgency::class, 'agency_id');
+    }
 }

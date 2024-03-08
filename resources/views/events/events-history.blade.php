@@ -64,7 +64,9 @@
                             <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('Giải thưởng') }}
                             </th>
-                            <th class="px-6 py-3 bg-gray-50"></th>
+                            <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                {{ __(' ') }}
+                            </th>
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="tbody">
@@ -204,6 +206,7 @@
                         }
                     },
                     success: function (data) {
+                        console.log(data);
                         $('#agencyListText').removeClass('hidden');
                         $('#agencyTable').removeClass('hidden');
                         $('#prizeList').removeClass('hidden');
@@ -222,10 +225,13 @@
                                 '<div class="text-sm leading-5 text-gray-900">' + value.agency_id + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
-                                '<div class="text-sm leading-5 text-gray-900">' + value.agency_name + '</div>' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.agency.agency_name + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
-                                '<div class="text-sm leading-5 text-gray-900">' + value.district + ' - ' + value.province + '</div>' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.agency.province.province + '</div>' +
+                                '</td>' +
+                                '<td class="px-6 py-4 whitespace-no-wrap">' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.prize_name + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">' +
                                 `<a href="events/${event_id}" class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>` +
@@ -235,6 +241,16 @@
 
                         if (prizes.length > 0) {
                             $.each(prizes, function (index, value) {
+                                let agencies = value.event_agencies;
+                                let ageciesId = [];
+                                $.each(agencies, function (index, value) {
+                                    if (value.agency_id) {
+                                        ageciesId.push(value.agency_id);
+                                    }
+                                });
+                                let winnerString = ageciesId.length > 0  ? ageciesId.join(', ') : '-';
+                                let prizeDes = value.prize_des ? value.prize_des : 'Không có mô tả';
+
                                 $('#prizeTable tbody').append('<tr>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center">' +
                                     '<div class="text-sm leading-5 text-gray-900">' + value.prize_name + '</div>' +
@@ -243,10 +259,10 @@
                                     '<div class="text-sm leading-5 text-gray-900">' + value.prize_qty + '</div>' +
                                     '</td>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center">' +
-                                    '<div class="text-sm leading-5 text-gray-900">' + value.prize_desc ?? '-' + '</div>' +
+                                    '<div class="text-sm leading-5 text-gray-900">' + prizeDes + '</div>' +
                                     '</td>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center">' +
-                                    '<div class="text-sm leading-5 text-gray-900">' + (value.agency_id ? value.agency.agency_name : '-') + '</div>' +
+                                    '<div class="text-sm leading-5 text-gray-900">' + winnerString + '</div>' +
                                     '</td>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">' +
                                     '<a href="#" id="editPrize" class="text-slate-600 hover:text-blue-600">Sửa</a> - ' +

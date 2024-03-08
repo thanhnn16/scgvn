@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Prize extends Model
@@ -21,6 +22,16 @@ class Prize extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    public function eventAgencies(): HasMany
+    {
+        return $this->hasMany(EventAgency::class);
+    }
+
+    public function agencies(): BelongsToMany
+    {
+        return $this->belongsToMany(Agency::class, 'event_agencies', 'prize_id', 'agency_id');
     }
 
 }

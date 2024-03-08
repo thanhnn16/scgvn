@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\EventsImport;
 use App\Imports\EventDataImport;
 use App\Models\Event;
+use App\Models\EventAgency;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -29,17 +30,23 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        //
+        return view('events.event-create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        try {
+            $event = Event::create($request->all());
+            $eventId = $event->id;
+            return response()->json(['status' => 'success', 'message' => 'Tạo sự kiện thành công!', 'event_id' => $eventId]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -47,6 +54,7 @@ class EventController extends Controller
      */
     public function show(Event $event): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
+        $event->load(['agencies', 'prizes']);
         return view('events.event-detail', compact(['event']));
     }
 
@@ -182,19 +190,31 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public
-    function getEventData(Request $request): JsonResponse
-    {
-        try {
-            $event_id = $request->event_id;
-            $event = Event::find($event_id);
-            $agencies = $event->agencies;
-            $prizes = $event->prizes;
+    public function getEventData(Request $request): JsonResponse
+{
+    try {
+        $event_id = $request->event_id;
 
-            return response()->json(['agencies' => $agencies, 'prizes' => $prizes]);
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+        $event = Event::find($event_id);
+
+        $agencies = EventAgency::where('event_id', $event_id)->get();
+
+        $agencies->map(function ($item) {
+            return $item->agency->province;
+        })->unique('province_id');
+
+        $prizes = $event->prizes;
+
+
+
+        foreach ($prizes as $prize) {
+            $prize->agencies = $prize->eventAgencies->pluck('agency')->unique('agency_id');
         }
+
+        return response()->json(['agencies' => $agencies, 'prizes' => $prizes]);
+    } catch (Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
     }
+}
 
 }

@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('events-management')" :active="request()->routeIs(['events-management', 'events.show'])">
+                    <x-nav-link :href="route('events-management')" :active="request()->routeIs(['events-management', 'events.show', 'events.create'])">
                         {{ __('Quản lý sự kiện') }}
                     </x-nav-link>
                 </div>

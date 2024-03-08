@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgencyController;
+use App\Http\Controllers\EventAgencyController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProfileController;
@@ -41,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/import-with-data', [EventController::class, 'importWithAllData'])->name('events.import-with-data');
 
-    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
 
     Route::get('/events/all', [EventController::class, 'showAll'])->name('events.all');
@@ -64,9 +65,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/agencies/{agency}/edit', [AgencyController::class, 'edit'])->name('agencies.edit');
     Route::get('/agencies/filter', [AgencyController::class, 'filter'])->name('agencies.filter');
 
+//    event agencies
+    Route::post('/event-agencies/store', [EventAgencyController::class, 'store'])->name('event-agencies.store');
+
 
 //    prizes
     Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes-management');
+    Route::post('/prizes/store', [PrizeController::class, 'store'])->name('prizes.store');
 
 //    spinner
     Route::get('/spinner-management', [SpinnerController::class, 'index'])->name('spinner.management');

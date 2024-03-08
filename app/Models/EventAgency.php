@@ -30,4 +30,9 @@ class EventAgency extends Model
     {
         return $this->belongsTo(Prize::class, 'prize_id');
     }
+
+    public function province(): BelongsTo
+    {
+        return $this->belongsTo(Province::class, 'province_id');
+    }
 }

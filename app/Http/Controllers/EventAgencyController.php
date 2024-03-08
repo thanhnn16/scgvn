@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventAgency;
+use Exception;
 use Illuminate\Http\Request;
 
 class EventAgencyController extends Controller
@@ -28,7 +29,12 @@ class EventAgencyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            EventAgency::create($request->all());
+            return response()->json(['status' => 'success', 'message' => 'Tạo đối tác sự kiện thành công!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     /**
