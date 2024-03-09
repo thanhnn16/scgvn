@@ -73,7 +73,14 @@ class AgencyController extends Controller
     public function show(Agency $agency): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $agency->load('province');
-        return view('agencies.agencies-details', compact('agency'));
+
+        $eventAgencies = $agency->eventAgencies;
+        $eventAgencies->load('prize', 'event');
+
+//        load prizes in eventAgencies from prize_id
+
+
+        return view('agencies.agencies-details', compact('agency', 'eventAgencies'));
     }
 
     /**

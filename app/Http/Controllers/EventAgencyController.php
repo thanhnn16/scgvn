@@ -56,4 +56,23 @@ class EventAgencyController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+    public function addPrize(Request $request): JsonResponse
+    {
+        try {
+            $eventAgency = EventAgency::where('agency_id', $request->agency_id)
+                ->first();
+            if ($eventAgency) {
+                DB::table('event_agencies')
+                    ->where('agency_id', $request->agency_id)
+                    ->where('event_id', $request->event_id)
+                    ->update(['prize_id' => $request->prize_id]);
+                return response()->json(['status' => 'success', 'message' => 'Thêm giải thưởng thành công!']);
+            } else {
+                return response()->json(['error' => 'EventAgency not found']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 }

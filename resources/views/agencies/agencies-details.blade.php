@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -42,7 +43,7 @@
             </div>
         </div>
 
-{{--        các giải thưởng đã trúng--}}
+        {{--        các giải thưởng đã trúng--}}
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -52,6 +53,50 @@
                         </div>
                     </div>
                 </div>
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tên sự kiện
+                        </th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Ngày bắt đầu
+                        </th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Ngày kết thúc
+                        </th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Tên giải thưởng
+                        </th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Mô tả
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach ($eventAgencies as $eventAgency)
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 text-center">{{ $eventAgency->event->title }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 text-center">{{ Carbon::parse($eventAgency->event->start_date)->format('d/m/Y') }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 text-center">{{ Carbon::parse($eventAgency->event->end_date)->format('d/m/Y') }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 text-center">{{ $eventAgency->prize->prize_name }}</div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="text-sm text-gray-900 text-center">{{ $eventAgency->prize->prize_desc }}</div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+
+                </table>
+
             </div>
         </div>
 
@@ -62,4 +107,5 @@
 <script>
     console.log('hello')
     console.log('Agency: ', @json($agency));
+    console.log('Agency EV: ', @json($eventAgencies));
 </script>

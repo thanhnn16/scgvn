@@ -21,10 +21,7 @@ class SpinnerController extends Controller
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $events = Event::all();
-        $event_agencies = EventAgency::all();
-        $events->load('prizes');
-        $events->load('agencies');
-        return view('spinner.spinner-management', compact(['events', 'event_agencies']));
+        return view('spinner.spinner-management', compact(['events']));
     }
 
 
@@ -33,8 +30,10 @@ class SpinnerController extends Controller
      */
     public function show(Event $event): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        $event->load('agencies', 'prizes');
-        return view('spinner.index', compact('event'));
+        $event->load('prizes');
+        $eventAgencies = $event->eventAgencies;
+        $eventAgencies->load('agency');
+        return view('spinner.index', compact('event', 'eventAgencies'));
     }
 
     public function awardPrize(Request $request): JsonResponse

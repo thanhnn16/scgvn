@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="d58Et_hG0KrLc6xKv03J8U5NA6jqak0kCFxBaz7Y1MM"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="../images/logo.svg">
     <link rel="apple-touch-icon" sizes="180x180" href="../images/logo.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="../images/logo.svg">
@@ -40,6 +41,7 @@
                                     <div class="card-body">
                                         <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->prize_qty }} </span> </div>
                                         <div class="prize-quantity">Đại lý trúng giải</div>
+                                        <div class="list-agency"></div>
                                     </div>
                                 </div>
                             </div>
@@ -94,11 +96,15 @@
 
 <script type="text/javascript">
 
-    console.log('Events: ', @json($event));
+    let agencies = @json($eventAgencies);
 
-    let agencies = @json($event->agencies);
+    {{--let agencies = @json($event->eventAgencies);--}}
+{{--    let prizes = @json($event->prizes);--}}
+    let prizes = @json($event->prizes).map(prize => ({...prize, remaining: prize.prize_qty}));
 
-    console.log('Agencies: ', agencies)
+
+    // console.log('Agencies: ', agencies);
+    // console.log('Prizes: ', prizes);
 
     let isReady = false;
 
@@ -144,11 +150,31 @@
     });
 
     function startSpin() {
-        if (!isReady) {
+
+        let totalPrizes = prizes.reduce((total, prize) => total + prize.remaining, 0);
+        if (totalPrizes === 0) {
+            $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
+            $('#notiModal').modal('show');
+            showCanvas();
+            return;
+        }
+
+        let selectedPrize = prizes.find(prize => prize.prize_name === $('.selected_prize').text());
+        if (!selectedPrize) {
             $('#notiText').text('Vui lòng chọn giải thưởng trước khi quay');
             $('#notiModal').modal('show');
             return;
         }
+        if (selectedPrize.remaining === 0) {
+            $('#notiText').text('Giải thưởng này đã hết, vui lòng chọn giải thưởng khác');
+            $('#notiModal').modal('show');
+            return;
+        }
+        // if (!isReady) {
+        //     $('#notiText').text('Vui lòng chọn giải thưởng trước khi quay');
+        //     $('#notiModal').modal('show');
+        //     return;
+        // }
         if (agencies.length === 0) {
             $('#notiText').text('Đã hết phần thưởng trong sự kiện lần này. Chúc mừng các đại lý đã trúng thưởng. Vui lòng chờ sự kiện tiếp theo');
             $('#notiModal').modal('show');
@@ -164,8 +190,8 @@
 
         let randomIndex = Math.floor(Math.random() * agencies.length);
         let agency = agencies[randomIndex]
-        let resultString = agency.pivot.agency_id;
-        let agencyName = agency.agency_name;
+        let resultString = agency.agency_id;
+        let agencyName = agency.agency.agency_name;
 
         agencies.splice(randomIndex, 1);
 
@@ -180,6 +206,9 @@
         while (result.length < 17) {
             result.unshift(1);
         }
+
+        addPrize(resultString, selectedPrize.id);
+
 
         sound.play();
         isSpinning = true;
@@ -204,6 +233,10 @@
                 $('#congratsText').text(`Chúc mừng đại lý ${agencyName} đã trúng thưởng`);
                 $('#congratsModel').modal('show');
                 $('#btn-start').prop('disabled', false);
+
+                selectedPrize.remaining -= 1;
+                $('.selected_prize').parent().find('.prize-quantity span').text(selectedPrize.remaining);
+
             }
         });
     }
@@ -219,6 +252,27 @@
         $('.card-title').removeClass('selected_prize');
         $(this).addClass('selected_prize');
     });
+
+    function addPrize(event_agency_id, prize_id) {
+        $.ajax({
+            url: '{{ route('event-agencies.add-prize') }}',
+            type: 'POST',
+            data: {
+                event_id: {{ $event->id }},
+                agency_id: event_agency_id,
+                prize_id: prize_id
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 
 </script>
 </body>

@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //    event agencies
     Route::post('/event-agencies/store', [EventAgencyController::class, 'store'])->name('event-agencies.store');
     Route::post('/event-agencies/storeOrUpdate', [EventAgencyController::class, 'storeOrUpdate'])->name('event-agencies.store_update');
+    Route::post('/event-agencies/add-prize/add', [EventAgencyController::class, 'addPrize'])->name('event-agencies.add-prize');
     Route::post('/event-agencies/{eventAgency}', [EventAgencyController::class, 'destroy'])->name('event-agencies.destroy');
 
 
