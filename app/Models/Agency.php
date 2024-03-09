@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Agency extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'agency_id';
+
+//    protected $primaryKey = 'agency_id';
 
     protected $fillable = [
         'keywords',
@@ -28,7 +29,7 @@ class Agency extends Model
 
     public function province(): BelongsTo
     {
-        return $this->belongsTo(Province::class);
+        return $this->belongsTo(Province::class, 'province_id');
     }
 
     public function prizes(): BelongsToMany

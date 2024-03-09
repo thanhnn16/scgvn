@@ -22,6 +22,6 @@ class Province extends Model
 
     public function agencies(): HasMany
     {
-        return $this->hasMany(Agency::class);
+        return $this->hasMany(Agency::class, 'province_id');
     }
 }

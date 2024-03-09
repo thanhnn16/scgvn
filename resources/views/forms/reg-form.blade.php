@@ -1,38 +1,91 @@
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-<form class="max-w-sm mx-auto"  method="post" action="https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml">
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="phone_number" id="phone_number" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label for="phone_number" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
-    </div>
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="customer_name" id="customer_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label for="customer_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">customer_name</label>
-    </div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
+<div class="form-container max-w-7xl mx-auto py-6 justify-items-center mt-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-bold text-center text-gray-900 dark:text-white">Đăng ký thông tin</h1>
+    <form class="mx-auto max-w-lg mt-2" method="post"
+          action="https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml">
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="province"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chọn
+                tỉnh</label>
+            <select name="province" id="province"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required>
+                <option value="0">-- Tỉnh --</option>
+                @foreach($provinces as $provinces)
+                    <option value="{{$provinces->id}}">{{$provinces->province}}</option>
+                @endforeach
+            </select>
+        </div>
 
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="customer_code" id="customer_code" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label for="customer_code" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">customer_code</label>
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="agency_name"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tên
+                đại lý</label>
+            <select name="agency_name" id="agency_name"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required>
+                <option value="0">-- Chọn đại lý --</option>
+            </select>
+        </div>
+
+
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="agency_id"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mã
+                đại lý</label>
+            <input type="text" name="agency_id" id="agency_id" disabled
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   placeholder="Mã đại lý" required/>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="distributor"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhà
+                phân phối</label>
+            <select name="distributor" id="distributor"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    required>
+                <option value="0">-- Chọn nhà phân phối --</option>
+            </select>
+        </div>
+
+
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="phone_number"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Số
+                điện thoại</label>
+            <input type="tel" name="phone_number" id="phone_number"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   placeholder=" " required/>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+            <label for="uid"
+                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zalo User Id</label>
+            <input type="text" disabled name="uid" id="uid"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   placeholder=" " required
+            />
+        </div>
+
+        <button id="send-data" type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Gửi thông tin
+        </button>
+        <button type="reset"
+                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+            Reset
+        </button>
+    </form>
+</div>
+
+<footer class="">
+    <div class="max-w-7xl mx-auto py-2">
+        <p class="text-center text-gray-400">
+            &copy; 2024 SCGVN. All rights reserved.
+        </p>
     </div>
-
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="province" id="province" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label for="province" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">province</label>
-    </div>
-
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="distributor" id="distributor" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label for="distributor" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">distributor</label>
-    </div>
-
-
-    <div class="relative z-0 w-full mb-5 group">
-        <input type="text" disabled name="uid" id="uid" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required
-        />
-        <label for="uid" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Zalo User Id</label>
-    </div>
-
-    <button id="send-data" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-</form>
+</footer>
 {{--lastest jquery --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {{--lastest jquery --}}
@@ -40,13 +93,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 <script>
-
-{{--    get uid params--}}
     var url_string = window.location.href;
     var url = new URL(url_string);
     var uid = url.searchParams.get("uid");
 
     $('#uid').val(uid);
+
+    $('#province').on('change', function () {
+        let provinceId = $(this).val();
+        getAgencies(provinceId);
+    });
+
+    // $('#distributor').on('change', function () {
+    //     let distributorId = $(this).val();
+    //     console.log(distributorId)
+    // });
+
+    $('#agency_name').on('change', function () {
+        let agencyId = $(this).val();
+        $('#agency_id').val(agencyId);
+    });
 
     $('#send-data').on('click', function (e) {
         e.preventDefault();
@@ -80,5 +146,67 @@
             }
         });
     });
+
+    function getAgencies(province_id) {
+        $.ajax({
+            url: ' {{ route('get-agencies') }}',
+            type: 'GET',
+            data: {
+                province_id: province_id
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                let agencies = data.agencies;
+                let distributors = data.distributors;
+
+                console.log(data)
+                console.log(agencies)
+                console.log(distributors)
+
+                $('#agency_name').empty();
+                $('#agency_name').append('<option value="0">-- Chọn đại lý --</option>');
+
+                $('#distributor').empty();
+                $('#distributor').append('<option value="0">-- Chọn nhà phân phối --</option>');
+
+                if (Array.isArray(agencies)) {
+                    agencies.sort(function (a, b) {
+                        if (a.agency_name < b.agency_name) {
+                            return -1;
+                        }
+                        if (a.agency_name > b.agency_name) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                }
+
+                if (Array.isArray(distributors)) {
+                    distributors.sort(function (a, b) {
+                        if (a.distributor < b.distributor) {
+                            return -1;
+                        }
+                        if (a.distributor > b.distributor) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                }
+
+                agencies.forEach(function (agency) {
+                    $('#agency_name').append('<option value="' + agency.agency_id + '">' + agency.agency_name + ' - ' + agency.agency_id + '</option>');
+                });
+
+                distributors.forEach(function (distributor) {
+                    $('#distributor').append('<option value="' + distributor.id + '">' + distributor.distributor_name + '</option>');
+                });
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 
 </script>

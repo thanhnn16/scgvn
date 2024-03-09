@@ -197,7 +197,7 @@ class EventController extends Controller
 
         $event = Event::find($event_id);
 
-        $agencies = EventAgency::where('event_id', $event_id)->get();
+        $agencies = EventAgency::where('event_id', $event_id)->with('prize')->get();
 
         $agencies->map(function ($item) {
             return $item->agency->province;

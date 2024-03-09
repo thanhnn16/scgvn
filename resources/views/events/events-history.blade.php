@@ -219,7 +219,7 @@
                         $.each(agencies, function (index, value) {
                             $('#agencyTable tbody').append('<tr>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
-                                '<div class="text-sm leading-5 text-gray-900">' + value.keywords + '</div>' +
+                                '<div class="text-sm leading-5 text-gray-900">' + value.agency.keywords + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
                                 '<div class="text-sm leading-5 text-gray-900">' + value.agency_id + '</div>' +
@@ -231,8 +231,8 @@
                                 '<div class="text-sm leading-5 text-gray-900">' + value.agency.province.province + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
-                                '<div class="text-sm leading-5 text-gray-900">' + value.prize_name + '</div>' +
-                                '</td>' +
+                                '<div class="text-sm leading-5 text-gray-900">' + (value.prize ? value.prize.prize_name : '-') + '</div>' +
+                                '</td>' + '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">' +
                                 `<a href="events/${event_id}" class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>` +
                                 '</td>' +
@@ -241,14 +241,15 @@
 
                         if (prizes.length > 0) {
                             $.each(prizes, function (index, value) {
-                                let agencies = value.event_agencies;
-                                let ageciesId = [];
+                                let agencies = value.agencies;
+                                console.log(agencies)
+                                let agencyNames = [];
                                 $.each(agencies, function (index, value) {
-                                    if (value.agency_id) {
-                                        ageciesId.push(value.agency_id);
+                                    if (value.agency_name) {
+                                        agencyNames.push(value.agency_name);
                                     }
                                 });
-                                let winnerString = ageciesId.length > 0  ? ageciesId.join(', ') : '-';
+                                let winnerString = agencyNames.length > 0 ? agencyNames.join(', ') : '-';
                                 let prizeDes = value.prize_des ? value.prize_des : 'Không có mô tả';
 
                                 $('#prizeTable tbody').append('<tr>' +

@@ -7,6 +7,7 @@ use App\Http\Controllers\PrizeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProvinceController;
 use App\Http\Controllers\SpinnerController;
+use App\Models\Province;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +22,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/form-dang-ky', function () {
-    return view('forms.reg-form');
+    $provinces = Province::all();
+    return view('forms.reg-form', compact('provinces'));
 })->name('forms.dang-ky');
 
+Route::get('/get-agencies', [AgencyController::class, 'getFromProvince'])->name('get-agencies');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agency;
 use App\Models\AgencyList;
+use App\Models\Distributor;
 use App\Models\Event;
 use App\Models\Province;
 use Illuminate\Contracts\Foundation\Application;
@@ -77,5 +78,17 @@ class AgencyController extends Controller
 //    public function filter(Request $request): JsonResponse
 //    {
 //        return response()->json(Agency::where('event_id', $request->event_id)->get());
-//    }
+//    }\
+
+    public function getFromProvince(Request $request): JsonResponse
+    {
+        $agencies = Agency::where('province_id', $request->province_id)->get();
+
+        $distributors = Distributor::where('province_id', $request->province_id)->get();
+
+        return response()->json([
+            'agencies' => $agencies,
+            'distributors' => $distributors
+        ]);
+    }
 }
