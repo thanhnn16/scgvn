@@ -7,11 +7,14 @@ use App\Models\AgencyList;
 use App\Models\Distributor;
 use App\Models\Event;
 use App\Models\Province;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AgencyController extends Controller
 {
@@ -38,17 +41,39 @@ class AgencyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        try {
+            $agency = Agency::create([
+                'keywords' => $request->keywords,
+                'agency_id' => $request->agency_id,
+                'agency_name' => $request->agency_name,
+                'province_id' => $request->province_id,
+            ]);
+            if ($agency) {
+                return response()->json([
+                    'message' => 'Agency created successfully',
+                    'status' => 'success',
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Agency creation failed',
+                ], 500);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Agency $agency)
+    public function show(Agency $agency): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        //
+        $agency->load('province');
+        return view('agencies.agencies-details', compact('agency'));
     }
 
     /**
@@ -62,17 +87,62 @@ class AgencyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Agency $agency)
+    public function update(Request $request): JsonResponse
     {
-        //
+        try {
+            $updated = Agency::where('agency_id', $request->agency_id)
+                ->update([
+                    'keywords' => $request->keywords,
+                    'agency_name' => $request->agency_name,
+                    'province_id' => $request->province_id,
+                ]);
+
+            if ($updated) {
+                return response()->json([
+                    'message' => 'Agency updated successfully',
+                    'status' => 'success',
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'No agency found with the provided ID',
+                    'status' => 'error',
+                ], 404);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function download(): BinaryFileResponse
+    {
+        return response()->download(public_path('templates/tinh_daily_npp.xlsx'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Agency $agency)
+    public function destroy(Request $request): JsonResponse
     {
-        //
+        try {
+            $deleted = DB::table('agencies')->where('agency_id', $request->agency_id)->delete();
+            if ($deleted) {
+                return response()->json([
+                    'message' => 'Agency deleted successfully',
+                    'status' => 'success',
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'No agency found with the provided ID',
+                    'status' => 'error',
+                ], 404);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 //
 //    public function filter(Request $request): JsonResponse

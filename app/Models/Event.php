@@ -32,6 +32,6 @@ class Event extends Model
 
     public function eventAgencies(): HasMany
     {
-        return $this->hasMany(EventAgency::class);
+        return $this->hasMany(EventAgency::class, 'event_id');
     }
 }

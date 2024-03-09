@@ -23,7 +23,7 @@ class EventAgency extends Model
 
     public function agency(): BelongsTo
     {
-        return $this->belongsTo(Agency::class, 'agency_id');
+        return $this->belongsTo(Agency::class, 'agency_id', 'agency_id');
     }
 
     public function prize(): BelongsTo

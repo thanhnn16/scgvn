@@ -5,20 +5,20 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('events-management') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs(['dashboard', 'index'])">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
+{{--                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">--}}
+{{--                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs(['dashboard', 'index'])">--}}
+{{--                        {{ __('Dashboard') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                </div>--}}
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('events-management')" :active="request()->routeIs(['events-management', 'events.show', 'events.create'])">
+                    <x-nav-link :href="route('events-management')" :active="request()->routeIs(['events-management', 'events.show', 'events.create', 'index'])">
                         {{ __('Quản lý sự kiện') }}
                     </x-nav-link>
                 </div>

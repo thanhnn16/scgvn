@@ -4,30 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EventAgency;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventAgencyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         try {
             EventAgency::create($request->all());
@@ -37,35 +21,39 @@ class EventAgencyController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EventAgency $eventAgency)
+    public function storeOrUpdate(Request $request): JsonResponse
     {
-        //
+        try {
+            $eventAgency = EventAgency::where('event_id', $request->event_id)->where('agency_id', $request->agency_id)->first();
+            if ($eventAgency) {
+                $eventAgency->update($request->all());
+            } else {
+                EventAgency::create($request->all());
+            }
+            return response()->json(['status' => 'success', 'message' => 'Tạo đối tác sự kiện thành công!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(EventAgency $eventAgency)
+    public function destroy(Request $request): JsonResponse
     {
-        //
-    }
+        try {
+            $eventAgency = EventAgency::where('event_id', $request->event_id)
+                ->where('agency_id', $request->agency_id)
+                ->first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, EventAgency $eventAgency)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(EventAgency $eventAgency)
-    {
-        //
+            if ($eventAgency) {
+                DB::table('event_agencies')
+                    ->where('event_id', $request->event_id)
+                    ->where('agency_id', $request->agency_id)
+                    ->delete();
+                return response()->json(['status' => 'success', 'message' => 'Xóa đối tác sự kiện thành công!']);
+            } else {
+                return response()->json(['error' => 'EventAgency not found']);
+            }
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 }

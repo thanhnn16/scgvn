@@ -206,7 +206,6 @@
                         }
                     },
                     success: function (data) {
-                        console.log(data);
                         $('#agencyListText').removeClass('hidden');
                         $('#agencyTable').removeClass('hidden');
                         $('#prizeList').removeClass('hidden');
@@ -234,18 +233,21 @@
                                 '<div class="text-sm leading-5 text-gray-900">' + (value.prize ? value.prize.prize_name : '-') + '</div>' +
                                 '</td>' + '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">' +
-                                `<a href="events/${event_id}" class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>` +
+                                `<a href="/agencies/detail/${value.agency_id}" class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>` +
                                 '</td>' +
                                 '</tr>');
                         });
 
                         if (prizes.length > 0) {
                             $.each(prizes, function (index, value) {
-                                let agencies = value.agencies;
-                                console.log(agencies)
+                                let ev_agency = value.event_agencies;
+                                let agency = ev_agency.map(function (item) {
+                                    return item.agency;
+                                });
+                                console.log(ev_agency)
                                 let agencyNames = [];
-                                $.each(agencies, function (index, value) {
-                                    if (value.agency_name) {
+                                $.each(agency, function (index, value) {
+                                    if (value && value.agency_name) {
                                         agencyNames.push(value.agency_name);
                                     }
                                 });

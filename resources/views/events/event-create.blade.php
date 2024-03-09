@@ -216,10 +216,6 @@
 
                 console.log('Price list: ' + prizes);
 
-                prizes.forEach(function (prize) {
-                    console.log(prize);
-                });
-
                 let isErr = false;
 
                 $.ajax({

@@ -21,22 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/form-dang-ky', function () {
-    $provinces = Province::all();
-    return view('forms.reg-form', compact('provinces'));
-})->name('forms.dang-ky');
-
-Route::get('/get-agencies', [AgencyController::class, 'getFromProvince'])->name('get-agencies');
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-//    dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
 //    events
     Route::get('/events', [EventController::class, 'index'])->name('events-management');
@@ -57,6 +45,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 
+    Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+
 //    provinces
     Route::post('/provinces/import', [ProvinceController::class, 'import'])->name('provinces.import');
 
@@ -64,17 +54,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies-management');
     Route::get('/agencies/create', [AgencyController::class, 'create'])->name('agencies.create');
     Route::post('/agencies', [AgencyController::class, 'store'])->name('agencies.store');
-    Route::get('/agencies/{agency}', [AgencyController::class, 'show'])->name('agencies.show');
+    Route::delete('/agencies/destroy', [AgencyController::class, 'destroy'])->name('agencies.destroy');
+    Route::get('/agencies/detail/{agency}', [AgencyController::class, 'show'])->name('agencies.show');
+    Route::post('/agencies/update', [AgencyController::class, 'update'])->name('agencies.update');
     Route::get('/agencies/{agency}/edit', [AgencyController::class, 'edit'])->name('agencies.edit');
     Route::get('/agencies/filter', [AgencyController::class, 'filter'])->name('agencies.filter');
+    Route::get('/agencies/download-template', [AgencyController::class, 'download'])->name('agencies.download-template');
 
 //    event agencies
     Route::post('/event-agencies/store', [EventAgencyController::class, 'store'])->name('event-agencies.store');
+    Route::post('/event-agencies/storeOrUpdate', [EventAgencyController::class, 'storeOrUpdate'])->name('event-agencies.store_update');
+    Route::post('/event-agencies/{eventAgency}', [EventAgencyController::class, 'destroy'])->name('event-agencies.destroy');
 
 
 //    prizes
     Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes-management');
     Route::post('/prizes/store', [PrizeController::class, 'store'])->name('prizes.store');
+    Route::delete('/prizes/{prize}', [PrizeController::class, 'destroy'])->name('prizes.destroy');
+    Route::put('/prizes/{prize}', [PrizeController::class, 'update'])->name('prizes.update');
 
 //    spinner
     Route::get('/spinner-management', [SpinnerController::class, 'index'])->name('spinner.management');
@@ -84,9 +81,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/backup', [EventController::class, 'backup'])->name('backup');
 
 //    index
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/', [EventController::class, 'index'])->name('index');
 });
+
+
+Route::get('/form-dang-ky', function () {
+    $provinces = Province::all();
+    return view('forms.reg-form', compact('provinces'));
+})->name('forms.dang-ky');
+
+Route::get('/get-agencies', [AgencyController::class, 'getFromProvince'])->name('get-agencies');
+
 
 require __DIR__ . '/auth.php';

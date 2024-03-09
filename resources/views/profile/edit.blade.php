@@ -3,6 +3,11 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Hồ sơ') }}
         </h2>
+        @if(session('status') === 'password-updated')
+            <div class="text-sm mt-5 text-green-600">
+                {{ __('Mật khẩu đã được cập nhật.') }}
+            </div>
+        @endif
     </x-slot>
 
     <div class="py-12">

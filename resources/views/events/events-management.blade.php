@@ -63,10 +63,6 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Đại lý tham gia
-                            </th>
-                            <th scope="col"
-                                class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Trạng thái
                             </th>
                             <th scope="col"
@@ -87,9 +83,6 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">{{ Carbon::parse($event->start_date)->format('d/m/Y') }}
                                         - {{ Carbon::parse($event->end_date)->format('d/m/Y') }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-center text-gray-900">{{ $event->agencies->count() ?? 0 }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">
@@ -148,7 +141,7 @@
                                 <a href="{{ route('events.download-template') }}" class="text-emerald-500">
                                     đây
                                 </a>
-                                để tải file excel mẫu
+                                để tải file excel mẫu cho sự kiện, đại lý tham gia, phần thưởng
                             </p>
                             <form class="space-y-4" method="POST" action="{{ route('events.import-with-data') }}"
                                   enctype="multipart/form-data">
@@ -217,7 +210,7 @@
 
 
         function createEventHTML(event) {
-            let agenciesLength = event.agencies.length;
+            let agenciesLength = event.event_agencies.length;
             let eventId = event.id;
 
 
@@ -242,9 +235,6 @@
             })}
     </div>
 </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-center text-gray-900">${agenciesLength ?? 0} </div>
-            </td>
             <td class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-center text-gray-900">${event.status} </div>
             </td>

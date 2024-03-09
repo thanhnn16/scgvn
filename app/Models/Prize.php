@@ -26,7 +26,7 @@ class Prize extends Model
 
     public function eventAgencies(): HasMany
     {
-        return $this->hasMany(EventAgency::class);
+        return $this->hasMany(EventAgency::class, 'prize_id');
     }
 
     public function agencies(): BelongsToMany

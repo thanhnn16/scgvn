@@ -1,7 +1,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
 <div class="form-container max-w-7xl mx-auto py-6 justify-items-center mt-6 px-4 sm:px-6 lg:px-8">
     <h1 class="text-2xl font-bold text-center text-gray-900 dark:text-white">Đăng ký thông tin</h1>
-    <form class="mx-auto max-w-lg mt-2" method="post"
+    <form class="mx-auto max-w-lg mt-2" method="post" id="reg-form"
           action="https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml">
         <div class="relative z-0 w-full mb-5 group">
             <label for="province"
@@ -77,6 +77,10 @@
             Reset
         </button>
     </form>
+    <div class="reg-result hidden mt-4">
+        <p class="text-center text-green-500 font-bold"></p>
+    </div>
+
 </div>
 
 <footer class="">
@@ -103,11 +107,6 @@
         let provinceId = $(this).val();
         getAgencies(provinceId);
     });
-
-    // $('#distributor').on('change', function () {
-    //     let distributorId = $(this).val();
-    //     console.log(distributorId)
-    // });
 
     $('#agency_name').on('change', function () {
         let agencyId = $(this).val();
@@ -139,8 +138,9 @@
                 'Accept': 'application/json',
             },
             success: function (data) {
-                console.log(data);
-            },
+                $('#reg-form').addClass('hidden');
+                $('.reg-result').removeClass('hidden').find('p').text('Đăng ký thành công');
+                },
             error: function (error) {
                 console.log(error);
             }

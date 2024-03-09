@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EventsExport;
 use App\Imports\EventsImport;
 use App\Imports\EventDataImport;
 use App\Models\Event;
@@ -24,6 +25,7 @@ class EventController extends Controller
     public function index(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $events = Event::all();
+        $events->load('eventAgencies');
         return view('events.events-management', compact('events'));
     }
 
@@ -54,8 +56,21 @@ class EventController extends Controller
      */
     public function show(Event $event): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $event->load(['agencies', 'prizes']);
-        return view('events.event-detail', compact(['event']));
+//        $event->agencies = $event->eventAgencies->map(function ($item) {
+//            return $item->agency->province;
+//        })->unique('province_id');
+
+        $event_agencies = $event->eventAgencies;
+        $event_agencies->map(function ($item) {
+            return $item->agency->province;
+        })->unique('province_id');
+
+        $prizes = $event->prizes;
+        foreach ($prizes as $prize) {
+            $prize->event_agencies = $prize->eventAgencies;
+        }
+
+        return view('events.event-detail', compact(['event', 'event_agencies', 'prizes']));
     }
 
     /**
@@ -82,15 +97,21 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event): JsonResponse
     {
-        //
+        try {
+            $event->delete();
+            return response()->json(['status' => 'success', 'message' => 'Xóa sự kiện thành công!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
 
-    public function eventHistory()
+    public function eventHistory(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        $events = Event::all()->load(['agencies', 'prizes']);
+        $events = Event::all()->load(['eventAgencies', 'prizes']);
+//        $events = Event::all()->load(['eventAgencies', 'prizes']);
         return view('events.events-history', compact('events'));
     }
 
@@ -99,7 +120,7 @@ class EventController extends Controller
      */
     public function download(): BinaryFileResponse
     {
-        return response()->download(public_path('templates/events-template.xlsx'));
+        return response()->download(public_path('templates/scgvn-data.xlsx'));
     }
 
     /**
@@ -128,6 +149,11 @@ class EventController extends Controller
         }
     }
 
+    public function export(Event $event): BinaryFileResponse
+    {
+        return Excel::download(new EventsExport($event), 'event.xlsx');
+    }
+
     public function importWithAllData(Request $request): RedirectResponse
     {
         try {
@@ -145,8 +171,8 @@ class EventController extends Controller
     public function showAll(): JsonResponse
     {
         $events = Event::all();
-        $events->load('agencies');
-        $events->load('prizes');
+        $events->load('eventAgencies');
+//        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -154,8 +180,8 @@ class EventController extends Controller
     function showOngoing(): JsonResponse
     {
         $events = Event::whereBetween('start_date', [now(), now()->addDays(10)])->get();
-        $events->load('agencies');
-        $events->load('prizes');
+        $events->load('eventAgencies');
+//        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -163,8 +189,8 @@ class EventController extends Controller
     function showUpcoming(): JsonResponse
     {
         $events = Event::where('start_date', '>', now())->get();
-        $events->load('agencies');
-        $events->load('prizes');
+        $events->load('eventAgencies');
+//        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -174,8 +200,8 @@ class EventController extends Controller
         $events = Event::where('end_date', '<', now())
             ->where('start_date', '<', now())
             ->get();
-        $events->load('agencies');
-        $events->load('prizes');
+        $events->load('eventAgencies');
+//        $events->load('prizes');
         return response()->json($events);
     }
 
@@ -185,36 +211,57 @@ class EventController extends Controller
         $events = Event::where('start_date', '>=', $request->start_date)
             ->where('end_date', '<=', $request->end_date)
             ->get();
-        $events->load('agencies');
-        $events->load('prizes');
+        $events->load('eventAgencies');
+//        $events->load('prizes');
         return response()->json($events);
     }
 
     public function getEventData(Request $request): JsonResponse
-{
-    try {
-        $event_id = $request->event_id;
+    {
+        try {
+            $event_id = $request->event_id;
 
-        $event = Event::find($event_id);
+            $event = Event::find($event_id);
 
-        $agencies = EventAgency::where('event_id', $event_id)->with('prize')->get();
+            $agencies = EventAgency::where('event_id', $event_id)->with('prize')->get();
 
-        $agencies->map(function ($item) {
-            return $item->agency->province;
-        })->unique('province_id');
+            $agencies->map(function ($item) {
+                return $item->agency->province;
+            })->unique('province_id');
 
-        $prizes = $event->prizes;
+            $prizes = $event->prizes->load('eventAgencies');
 
+            foreach ($prizes as $prize) {
+                $prize->event_agencies = $prize->eventAgencies->load('agency');
+            }
 
-
-        foreach ($prizes as $prize) {
-            $prize->agencies = $prize->eventAgencies->pluck('agency')->unique('agency_id');
+            return response()->json(['agencies' => $agencies, 'prizes' => $prizes]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
-
-        return response()->json(['agencies' => $agencies, 'prizes' => $prizes]);
-    } catch (Exception $e) {
-        return response()->json(['error' => $e->getMessage()]);
     }
-}
 
+//    create function to duplicate the event with new title
+    public function duplicateEvent(Request $request): JsonResponse
+    {
+        try {
+            $event = Event::find($request->event_id);
+            $newEvent = $event->replicate();
+            $newEvent->title = $request->title;
+            $newEvent->save();
+            return response()->json(['status' => 'success', 'message' => 'Sự kiện đã được sao chép!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function backup(): BinaryFileResponse|JsonResponse
+    {
+        $command = "mysqldump -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " " . env('DB_DATABASE') . " > " . public_path('backup.sql') . " 2>&1";
+        exec($command, $output, $return_var);
+        if ($return_var !== 0) {
+            return response()->json(['error' => implode("\n", $output)]);
+        }
+        return response()->download(public_path('backup.sql'));
+    }
 }

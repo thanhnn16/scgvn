@@ -12,7 +12,6 @@ class Agency extends Model
 {
     use HasFactory;
 
-//    protected $primaryKey = 'agency_id';
 
     protected $fillable = [
         'keywords',
@@ -34,11 +33,16 @@ class Agency extends Model
 
     public function prizes(): BelongsToMany
     {
-        return $this->belongsToMany(Prize::class, 'event_agencies',  'prize_id');
+        return $this->belongsToMany(Prize::class, 'event_agencies', 'prize_id');
     }
 
     public function eventAgencies(): HasMany
     {
-        return $this->hasMany(EventAgency::class, 'agency_id');
+        return $this->hasMany(EventAgency::class, 'agency_id', 'agency_id');
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'agency_id';
     }
 }
