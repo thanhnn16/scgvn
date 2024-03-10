@@ -117,9 +117,9 @@
     $('#send-data').on('click', function (e) {
         e.preventDefault();
         var phone_number = $('#phone_number').val();
-        var customer_name = $('#customer_name').val();
-        var customer_code = $('#customer_code').val();
-        var province = $('#province').val();
+        var customer_name = $('#agency_name').val();
+        var customer_code = $('#agency_id').val();
+        var province = $('#province option:selected').text();
         var distributor = $('#distributor').val();
         var uid = $('#uid').val();
 
