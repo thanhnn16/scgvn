@@ -95,36 +95,43 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-{{--    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">--}}
-{{--        <div class="pt-2 pb-3 space-y-1">--}}
-{{--            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">--}}
-{{--                {{ __('Dashboard') }}--}}
-{{--            </x-responsive-nav-link>--}}
-{{--        </div>--}}
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('events-management')" :active="request()->routeIs(['events-management', 'events.show', 'events.create', 'index'])">
+                {{ __('Quản lý sự kiện') }}
+            </x-responsive-nav-link>
 
-{{--        <!-- Responsive Settings Options -->--}}
-{{--        <div class="pt-4 pb-1 border-t border-gray-200">--}}
-{{--            <div class="px-4">--}}
-{{--                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>--}}
-{{--                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>--}}
-{{--            </div>--}}
+            <x-responsive-nav-link :href="route('events-history')" :active="request()->routeIs('events-history')">
+                {{ __('Lịch sử quay thưởng') }}
+            </x-responsive-nav-link>
 
-{{--            <div class="mt-3 space-y-1">--}}
-{{--                <x-responsive-nav-link :href="route('profile.edit')">--}}
-{{--                    {{ __('Profile') }}--}}
-{{--                </x-responsive-nav-link>--}}
+            <x-responsive-nav-link :href="route('agencies-management')" :active="request()->routeIs('agencies-management')">
+                {{ __('Dữ liệu đại lý') }}
+            </x-responsive-nav-link>
+        </div>
 
-{{--                <!-- Authentication -->--}}
-{{--                <form method="POST" action="{{ route('logout') }}">--}}
-{{--                    @csrf--}}
+        <!-- Responsive Settings Options -->
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            <div class="flex items-center px-4">
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->username }}</div>
+            </div>
 
-{{--                    <x-responsive-nav-link :href="route('logout')"--}}
-{{--                            onclick="event.preventDefault();--}}
-{{--                                        this.closest('form').submit();">--}}
-{{--                        {{ __('Log Out') }}--}}
-{{--                    </x-responsive-nav-link>--}}
-{{--                </form>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
+            <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                    {{ __('Hồ sơ') }}
+                </x-responsive-nav-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Đăng xuất') }}
+                    </x-responsive-nav-link>
+                </form>
+            </div>
+        </div>
+    </div>
 </nav>

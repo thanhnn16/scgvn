@@ -1,14 +1,15 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
-<div class="form-container max-w-7xl mx-auto py-6 justify-items-center mt-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="text-2xl font-bold text-center text-gray-900 dark:text-white">Đăng ký thông tin</h1>
-    <form class="mx-auto max-w-lg mt-2" method="post" id="reg-form"
+<div class="form-container md:w-full sm:w-10/12 mx-auto py-6 justify-items-center mt-6 px-4">
+    <h1 class="text-2xl mt-6 font-bold text-center text-gray-900 dark:text-white">Đăng ký thông tin</h1>
+    <form class="max-w-2xl mx-auto"
+          method="post" id="reg-form"
           action="https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml">
         <div class="relative z-0 w-full mb-5 group">
             <label for="province"
                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chọn
                 tỉnh</label>
             <select name="province" id="province"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required>
                 <option value="0">-- Tỉnh --</option>
                 @foreach($provinces as $provinces)
@@ -19,10 +20,10 @@
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="agency_name"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tên
+                   class="block mb-2  font-medium text-gray-900 dark:text-white">Tên
                 đại lý</label>
             <select name="agency_name" id="agency_name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required>
                 <option value="0">-- Chọn đại lý --</option>
             </select>
@@ -31,19 +32,19 @@
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="agency_id"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mã
+                   class="block mb-2  font-medium text-gray-900 dark:text-white">Mã
                 đại lý</label>
             <input type="text" name="agency_id" id="agency_id" disabled
-                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder="Mã đại lý" required/>
         </div>
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="distributor"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhà
+                   class="block mb-2  font-medium text-gray-900 dark:text-white">Nhà
                 phân phối</label>
             <select name="distributor" id="distributor"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required>
                 <option value="0">-- Chọn nhà phân phối --</option>
             </select>
@@ -52,28 +53,28 @@
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="phone_number"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Số
+                   class="block mb-2  font-medium text-gray-900 dark:text-white">Số
                 điện thoại</label>
             <input type="tel" name="phone_number" id="phone_number"
-                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder=" " required/>
         </div>
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="uid"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zalo User Id</label>
+                   class="block mb-2  font-medium text-gray-900 dark:text-white">Zalo User Id</label>
             <input type="text" disabled name="uid" id="uid"
-                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder=" " required
             />
         </div>
 
         <button id="send-data" type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Gửi thông tin
         </button>
         <button type="reset"
-                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
             Reset
         </button>
     </form>
@@ -139,7 +140,7 @@
             },
             success: function (data) {
                 $('#reg-form').addClass('hidden');
-                $('.reg-result').removeClass('hidden').find('p').text('Đăng ký thành công');
+                $('.reg-result').removeClass('hidden').find('p').text('Đăng ký thành công, SCG xin chân thành cảm ơn!');
                 },
             error: function (error) {
                 console.log(error);
@@ -161,9 +162,6 @@
                 let agencies = data.agencies;
                 let distributors = data.distributors;
 
-                console.log(data)
-                console.log(agencies)
-                console.log(distributors)
 
                 $('#agency_name').empty();
                 $('#agency_name').append('<option value="0">-- Chọn đại lý --</option>');

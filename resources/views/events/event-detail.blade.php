@@ -36,10 +36,11 @@
                         class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
                     <a href="#">Thêm phần thưởng</a></button>
 
-                <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
-                    <a href="#">Xuất file Excel</a></button>
+{{--                <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">--}}
+{{--                    <a href="#">Xuất file Excel</a></button>--}}
 
-                <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
+                <button data-modal-target="duplicateEventModal" data-modal-toggle="duplicateEventModal"
+                        class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
                     Nhân đôi sự kiện
                 </button>
 
@@ -171,7 +172,9 @@
                                     <div class="text-sm leading-5 text-gray-900">{{ $agency->prize->prize_name ?? '-' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">
-                                    <a href="#" data-modal-target="eADelModal" data-modal-toggle="eADelModal" data-agency-name="{{ $agency->agency->agency_name }}" data-agency-id="{{ $agency->agency->agency_id }}"
+                                    <a href="#" data-modal-target="eADelModal" data-modal-toggle="eADelModal"
+                                       data-agency-name="{{ $agency->agency->agency_name }}"
+                                       data-agency-id="{{ $agency->agency->agency_id }}"
                                        class="text-slate-600 hover:text-red-900 deleteAgency">Xóa</a>
                                 </td>
                             </tr>
@@ -201,7 +204,9 @@
                         </div>
                         <div class="flex items-center justify-start mt-3">
                             <button data-modal-target="addPrizeModal" data-modal-toggle="addPrizeModal"
-                                    class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">Thêm phần thưởng</button>
+                                    class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
+                                Thêm phần thưởng
+                            </button>
                         </div>
                     </div>
                 @else
@@ -253,9 +258,14 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">
-                                        <a href="#" id="editPrize" data-modal-target="edtPrizeModal" data-modal-toggle="edtPrizeModal" data-prize-id="{{ $prize->id }}" data-prize-name="{{ $prize->prize_name }}" data-prize-qty="{{ $prize->prize_qty }}" data-prize-desc="{{ $prize->prize_desc }}"
+                                        <a href="#" id="editPrize" data-modal-target="edtPrizeModal"
+                                           data-modal-toggle="edtPrizeModal" data-prize-id="{{ $prize->id }}"
+                                           data-prize-name="{{ $prize->prize_name }}"
+                                           data-prize-qty="{{ $prize->prize_qty }}"
+                                           data-prize-desc="{{ $prize->prize_desc }}"
                                            class="text-slate-600 hover:text-blue-600 editPrize">Sửa</a> -
-                                        <a href="#" id="{{ $prize->id }}" data-modal-target="prizeDelModal" data-modal-toggle="prizeDelModal" data-prize-name="{{ $prize->prize_name }}"
+                                        <a href="#" id="{{ $prize->id }}" data-modal-target="prizeDelModal"
+                                           data-modal-toggle="prizeDelModal" data-prize-name="{{ $prize->prize_name }}"
                                            class="text-slate-600 hover:text-red-900 deletePrize">Xóa</a>
                                     </td>
                                 </tr>
@@ -293,7 +303,7 @@
             </div>
         </div>
     </div>
-{{--    delete event_agency --}}
+    {{--    delete event_agency --}}
     <div id="eADelModal" tabindex="-1"
          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
@@ -304,10 +314,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Bạn có chắc muốn xóa đại lý: <span></span> khỏi sự kiện? </h3>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Bạn có chắc muốn xóa đại lý:
+                        <span></span> khỏi sự kiện? </h3>
                     <button type="button" data-modal-hide="eADelModal" id="btn-del-ea"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                Chắc chắn
+                        Chắc chắn
                     </button>
                     <button data-modal-hide="confirmDelModal" type="button"
                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -328,10 +339,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Bạn có chắc muốn xóa phần thưởng: <span></span> khỏi sự kiện? </h3>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Bạn có chắc muốn xóa phần
+                        thưởng: <span></span> khỏi sự kiện? </h3>
                     <button type="button" data-modal-hide="prizeDelModal" id="btn-del-prize"
                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                Chắc chắn
+                        Chắc chắn
                     </button>
                     <button data-modal-hide="prizeDelModal" type="button"
                             class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -466,7 +478,7 @@
             </div>
         </div>
     </div>
-{{--    add prize modal--}}
+    {{--    add prize modal--}}
     <div id="addPrizeModal" tabindex="-1" aria-hidden="true"
          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-lg max-h-full">
@@ -599,6 +611,47 @@
         </div>
     </div>
 
+    {{--    duplicate event modal--}}
+    <div id="duplicateEventModal" tabindex="-1" aria-hidden="true"
+         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-lg max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Nhân đôi sự kiện
+                    </h3>
+                    <button type="button"
+                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            data-modal-toggle="duplicateEventModal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                             viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5" id="addAgencyForm">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <label for="newEvName"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhập tên sự kiện</label>
+                            <input type="text" name="newEvName" id="newEvName"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   placeholder="Nhập tên cho bản sao sự kiện" required="">
+                        </div>
+                    </div>
+                    <button type="submit" data-modal-hide="duplicateEventModal" id="confirmDuplicate"
+                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Xác nhận
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -729,6 +782,14 @@
                 let event_id = {{ $event->id }};
                 deleteEvent(event_id);
             });
+
+            $('#confirmDuplicate').on('click', function (e) {
+                e.preventDefault();
+                let event_id = {{ $event->id }};
+                let new_event_name = $('#newEvName').val();
+                duplicateEvent(event_id, new_event_name);
+            });
+
         });
 
         function deleteAgency(agency_id) {
@@ -876,8 +937,30 @@
             console.log('export excel');
         }
 
-        function duplicateEvent() {
-            console.log('duplicate event');
+        function duplicateEvent(event_id, new_event_name) {
+            $.ajax({
+                url: '{{ route('events.duplicate') }}',
+                type: 'POST',
+                data: {
+                    event_id: event_id,
+                    title: new_event_name
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.status === 'success') {
+                        console.log(response);
+                        alert('Nhân đôi sự kiện thành công')
+                        window.location.href = '{{ route('events-management') }}';
+                    } else {
+                        console.log(response);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         }
 
         function saveUpdateEvent() {

@@ -249,6 +249,19 @@ class EventController extends Controller
             $newEvent = $event->replicate();
             $newEvent->title = $request->title;
             $newEvent->save();
+
+            foreach ($event->eventAgencies as $eventAgency) {
+                $newEventAgency = $eventAgency->replicate();
+                $newEventAgency->event_id = $newEvent->id;
+                $newEventAgency->save();
+            }
+
+            foreach ($event->prizes as $prize) {
+                $newPrize = $prize->replicate();
+                $newPrize->event_id = $newEvent->id;
+                $newPrize->save();
+            }
+
             return response()->json(['status' => 'success', 'message' => 'Sự kiện đã được sao chép!']);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);

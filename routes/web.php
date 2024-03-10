@@ -35,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
+    Route::post('/events/duplicate', [EventController::class, 'duplicateEvent'])->name('events.duplicate');
 
     Route::get('/events/all', [EventController::class, 'showAll'])->name('events.all');
     Route::get('/events/ongoing', [EventController::class, 'showOngoing'])->name('events.ongoing');
@@ -82,6 +83,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/backup', [EventController::class, 'backup'])->name('backup');
 
 //    index
+    Route::get('/dashboard', function () {
+        return redirect()->route('index');
+    })->name('dashboard');
+
     Route::get('/', [EventController::class, 'index'])->name('index');
 });
 
