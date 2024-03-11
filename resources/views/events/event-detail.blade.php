@@ -173,8 +173,8 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">
                                     <a href="#" data-modal-target="eADelModal" data-modal-toggle="eADelModal"
-                                       data-agency-name="{{ $agency->agency->agency_name }}"
-                                       data-agency-id="{{ $agency->agency->agency_id }}"
+                                       data-agency-name="{{ $agency->agency->agency_name ?? ' - ' }}"
+                                       data-agency-id="{{ $agency->agency->agency_id ?? ' - ' }}"
                                        class="text-slate-600 hover:text-red-900 deleteAgency">Xóa</a>
                                 </td>
                             </tr>
