@@ -36,8 +36,8 @@
                         class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
                     <a href="#">Thêm phần thưởng</a></button>
 
-{{--                <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">--}}
-{{--                    <a href="#">Xuất file Excel</a></button>--}}
+                <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">
+                    <a href="{{ route('events.export', $event->id) }}">Xuất file Excel</a></button>
 
                 <button data-modal-target="duplicateEventModal" data-modal-toggle="duplicateEventModal"
                         class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 mx-2 px-4 rounded mt-2">

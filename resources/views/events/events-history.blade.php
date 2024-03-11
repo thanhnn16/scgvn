@@ -94,9 +94,6 @@
                             <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 {{ __('Đại lý trúng giải') }}
                             </th>
-                            <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                {{ __('Hành động') }}
-                            </th>
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200" id="tbody">
@@ -266,10 +263,6 @@
                                     '</td>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center">' +
                                     '<div class="text-sm leading-5 text-gray-900">' + winnerString + '</div>' +
-                                    '</td>' +
-                                    '<td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">' +
-                                    '<a href="#" id="editPrize" class="text-slate-600 hover:text-blue-600">Sửa</a> - ' +
-                                    '<a href="#" id="' + value.id + '" class="text-slate-600 hover:text-red-900 deletePrize">Xóa</a>' +
                                     '</td>' +
                                     '</tr>');
                             });

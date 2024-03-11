@@ -34,18 +34,19 @@
 
     <div id="prize-container" class="mt-5 px-5">
         <div class="prize-list d-flex justify-content-between">
-                        @foreach($event->prizes as $prize)
-                            <div class="card prize-box mx-3 p-4">
-                                <div class="prize-item">
-                                    <div class="prize-name card-title fw-bold">{{ $prize->prize_name }}</div>
-                                    <div class="card-body">
-                                        <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->prize_qty }} </span> </div>
-                                        <div class="prize-quantity">Đại lý trúng giải</div>
-                                        <div class="list-agency"></div>
-                                    </div>
-                                </div>
+            @foreach($event->prizes as $prize)
+                <div class="card prize-box mx-3 p-4">
+                    <div class="prize-item">
+                        <div class="prize-name card-title mb-1 fw-bold">{{ $prize->prize_name }}</div>
+                        <div class="card-body p-0">
+                            <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->prize_qty }} </span>
                             </div>
-                        @endforeach
+                            <div class="prize-quantity">Đại lý trúng giải</div>
+                            <div class="list-agency"></div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -60,8 +61,12 @@
                     <div id="congratsText" class="fs-4 fw-medium text text-center"></div>
                 </div>
                 <div class="modal-footer justify-content-center border-top-0">
-                    <button type="button" onclick="hideCanvas()" class="btn btn-primary align-self-center"
-                            data-bs-dismiss="modal">Tiếp tục
+                    <button id="confirmBtn"
+                            type="button" class="btn btn-primary align-self-center" data-bs-dismiss="modal">Xác nhận
+                    </button>
+                    {{--                    cancel button--}}
+                    <button id="cancelBtn" onclick="hideCanvas()"
+                            type="button" class="btn btn-secondary align-self-center" data-bs-dismiss="modal">Hủy
                     </button>
                 </div>
             </div>
@@ -78,7 +83,8 @@
                     <div id="notiText"></div>
                 </div>
                 <div class="modal-footer justify-content-center border-top-0">
-                    <button type="button" class="btn btn-primary align-self-center" data-bs-dismiss="modal">Đóng
+                    <button id="confirmBtn"
+                            type="button" class="btn btn-primary align-self-center" data-bs-dismiss="modal">Xác nhận
                     </button>
                 </div>
             </div>
@@ -98,8 +104,6 @@
 
     let agencies = @json($eventAgencies);
 
-    {{--let agencies = @json($event->eventAgencies);--}}
-{{--    let prizes = @json($event->prizes);--}}
     let prizes = @json($event->prizes).map(prize => ({...prize, remaining: prize.prize_qty}));
 
 
@@ -152,6 +156,7 @@
     function startSpin() {
 
         let totalPrizes = prizes.reduce((total, prize) => total + prize.remaining, 0);
+
         if (totalPrizes === 0) {
             $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
             $('#notiModal').modal('show');
@@ -207,9 +212,6 @@
             result.unshift(1);
         }
 
-        addPrize(resultString, selectedPrize.id);
-
-
         sound.play();
         isSpinning = true;
         $('#btn-stop').prop('disabled', false);
@@ -228,15 +230,29 @@
             onFinish: function () {
                 sound.pause();
                 congratsSound.play();
+
                 isSpinning = false;
                 showCanvas();
-                $('#congratsText').text(`Chúc mừng đại lý ${agencyName} đã trúng thưởng`);
+                $('#congratsText').text(`Chúc mừng đại lý ${agencyName} đã trúng giải ${selectedPrize.prize_name}`);
                 $('#congratsModel').modal('show');
+
                 $('#btn-start').prop('disabled', false);
 
-                selectedPrize.remaining -= 1;
-                $('.selected_prize').parent().find('.prize-quantity span').text(selectedPrize.remaining);
+                $('#confirmBtn').off('click').click(function () {
+                    console.log('Still run this func')
+                    console.log(`Selected prize text: ${$('.selected_prize').text()} before minus: ${selectedPrize.remaining}`);
+                    selectedPrize.remaining -= 1;
+                    console.log(`Selected prize text: ${$('.selected_prize').text()} after minus: ${selectedPrize.remaining}`);
+                    $('.selected_prize').parent().find('.prize-quantity span').text(selectedPrize.remaining);
+                    hideCanvas();
+                    $('#congratsModel').modal('hide');
+                    addPrize(resultString, selectedPrize.id);
 
+                    let agencyName = agency.agency.agency_name;
+                    $('.selected_prize').parent().find('.list-agency').append('<p class="prize-winner"> • ' + agencyName + '</p>');
+
+                    $('#spinner ul').css('top', '0');
+                });
             }
         });
     }

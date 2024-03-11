@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/detail', [EventController::class, 'getEventData'])->name('events.get-data');
 
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+    Route::get('/events/export/{event}', [EventController::class, 'export'])->name('events.export');
 
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 
@@ -61,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/agencies/{agency}/edit', [AgencyController::class, 'edit'])->name('agencies.edit');
     Route::get('/agencies/filter', [AgencyController::class, 'filter'])->name('agencies.filter');
     Route::get('/agencies/download-template', [AgencyController::class, 'download'])->name('agencies.download-template');
+    Route::get('/agencies/export', [AgencyController::class, 'export'])->name('agencies.export');
 
 //    event agencies
     Route::post('/event-agencies/store', [EventAgencyController::class, 'store'])->name('event-agencies.store');

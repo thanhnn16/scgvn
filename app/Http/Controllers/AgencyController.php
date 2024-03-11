@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AgencyProvinceExport;
 use App\Models\Agency;
 use App\Models\AgencyList;
 use App\Models\Distributor;
@@ -14,6 +15,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class AgencyController extends Controller
@@ -167,5 +169,10 @@ class AgencyController extends Controller
             'agencies' => $agencies,
             'distributors' => $distributors
         ]);
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(new AgencyProvinceExport(), 'provinces_and_agencies.xlsx');
     }
 }

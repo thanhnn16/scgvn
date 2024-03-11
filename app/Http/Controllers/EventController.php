@@ -253,6 +253,7 @@ class EventController extends Controller
             foreach ($event->eventAgencies as $eventAgency) {
                 $newEventAgency = $eventAgency->replicate();
                 $newEventAgency->event_id = $newEvent->id;
+                $newEventAgency->prize_id = null;
                 $newEventAgency->save();
             }
 
@@ -270,11 +271,15 @@ class EventController extends Controller
 
     public function backup(): BinaryFileResponse|JsonResponse
     {
-        $command = "mysqldump -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " " . env('DB_DATABASE') . " > " . public_path('backup.sql') . " 2>&1";
-        exec($command, $output, $return_var);
-        if ($return_var !== 0) {
-            return response()->json(['error' => implode("\n", $output)]);
+        try {
+            $command = "mysqldump -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " " . env('DB_DATABASE') . " > " . public_path('backup.sql') . " 2>&1";
+            exec($command, $output, $return_var);
+            if ($return_var !== 0) {
+                return response()->json(['error' => implode("\n", $output)]);
+            }
+            return response()->download(public_path('backup.sql'));
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
-        return response()->download(public_path('backup.sql'));
     }
 }

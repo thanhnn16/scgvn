@@ -23,6 +23,8 @@
                 data-modal-show="uploadModal" data-modal-target="uploadModal">
             <a>Nhập từ Excel</a>
         </button>
+        <button class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded mt-2">
+            <a href="{{ route('agencies.export') }}">Xuất file Excel</a></button>
 
     </div>
 
