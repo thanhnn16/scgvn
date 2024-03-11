@@ -124,7 +124,7 @@
         getAgencies(provinceId);
     });
 
-    $('#agency_name').on('change', function () {
+    $('#agency_name').on('focusout', function () {
         // let agencyId = $(this).val();
         // $('#agency_id').val(agencyId);
 
