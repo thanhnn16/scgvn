@@ -9,7 +9,7 @@
           action="https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml">
         <div class="relative z-0 w-full mb-5 group">
             <label for="province"
-                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Chọn
+                   class="block mb-2 font-medium text-gray-900 dark:text-white">Chọn
                 tỉnh</label>
             <select name="province" id="province"
                     class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -23,7 +23,7 @@
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="agency_name"
-                   class="block mb-2  font-medium text-gray-900 dark:text-white">Tên
+                   class="block mb-2 font-medium text-gray-900 dark:text-white">Tên
                 đại lý</label>
             <select name="agency_name" id="agency_name"
                     class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -35,7 +35,7 @@
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="agency_id"
-                   class="block mb-2  font-medium text-gray-900 dark:text-white">Mã
+                   class="block mb-2 font-medium text-gray-900 dark:text-white">Mã
                 đại lý</label>
             <input type="text" name="agency_id" id="agency_id" disabled
                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -147,7 +147,7 @@
             success: function (data) {
                 $('#reg-form').addClass('hidden');
                 $('.reg-result').removeClass('hidden').find('p').text('Đăng ký thành công, SCG xin chân thành cảm ơn!');
-                },
+            },
             error: function (error) {
                 console.log(error);
             }
