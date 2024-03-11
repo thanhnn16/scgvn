@@ -119,12 +119,15 @@
 
     $('#send-data').on('click', function (e) {
         e.preventDefault();
-        var phone_number = $('#phone_number').val();
-        var customer_name = $('#agency_name').val();
-        var customer_code = $('#agency_id').val();
-        var province = $('#province option:selected').text();
-        var distributor = $('#distributor').val();
-        var uid = $('#uid').val();
+
+        let phone_number = $('#phone_number').val();
+        let customer_name_text = $('#agency_name option:selected').text();
+        let customer_name = customer_name_text.split(' - ')[0];
+
+        let customer_code = $('#agency_id').val();
+        let province = $('#province option:selected').text();
+        let distributor = $('#distributor').val();
+        let uid = $('#uid').val();
 
         $.ajax({
             url: 'https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml',
