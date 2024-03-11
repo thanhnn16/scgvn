@@ -7,6 +7,7 @@ use App\Imports\EventsImport;
 use App\Imports\EventDataImport;
 use App\Models\Event;
 use App\Models\EventAgency;
+use App\Models\Prize;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -280,6 +281,19 @@ class EventController extends Controller
             return response()->download(public_path('backup.sql'));
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function reset(): \Illuminate\Contracts\Foundation\Application|Application|RedirectResponse|\Illuminate\Routing\Redirector
+    {
+//        write function to delete all data in events, event_agencies, prizes table
+        try {
+            Event::truncate();
+            EventAgency::truncate();
+            Prize::truncate();
+            return redirect('/events')->with('success', 'Xóa dữ liệu thành công!');
+        } catch (Exception $e) {
+            return redirect('/events')->with('error', $e->getMessage());
         }
     }
 }

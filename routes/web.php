@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/download-template', [EventController::class, 'download'])->name('events.download-template');
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
     Route::post('/events/import-with-data', [EventController::class, 'importWithAllData'])->name('events.import-with-data');
+    Route::post('/events/reset', [EventController::class, 'reset'])->name('events.reset');
 
     Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');

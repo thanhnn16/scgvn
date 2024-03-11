@@ -28,9 +28,15 @@
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <h2 class="text-lg font-medium text-gray-900">
-                        {{ __('Sao lưu Database') }}
+                        {{ __('Sao lưu/xóa Database') }}
                     </h2>
-                    {{--                    export current db to sql file--}}
+                    {{--                    reset event db--}}
+                    <form method="post" action="{{ route('events.reset') }}" class="mt-6 space-y-6">
+                        @csrf
+                        <div class="flex items-center gap-4">
+                            <x-primary-button>{{ __('Đặt lại dữ liệu sự kiện') }}</x-primary-button>
+                        </div>
+                    </form>
                     <form method="post" action="{{ route('backup') }}" class="mt-6 space-y-6">
                         @csrf
                         <div class="flex items-center gap-4">
