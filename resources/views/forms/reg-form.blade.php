@@ -1,4 +1,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <div class="form-container md:w-full sm:w-10/12 mx-auto py-2 justify-items-center mt-6 px-4">
@@ -21,17 +23,25 @@
             </select>
         </div>
 
-        <div class="relative z-0 w-full mb-5 group">
+        {{--        <div class="relative z-0 w-full mb-5 group">--}}
+        {{--            <label for="agency_name"--}}
+        {{--                   class="block mb-2 font-medium text-gray-900 dark:text-white">Tên--}}
+        {{--                đại lý</label>--}}
+        {{--            <select name="agency_name" id="agency_name"--}}
+        {{--                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"--}}
+        {{--                    required>--}}
+        {{--                <option value="0">-- Chọn đại lý --</option>--}}
+        {{--            </select>--}}
+        {{--        </div>--}}
+
+        <div class="ui-widget relative z-0 w-full mb-5 group">
             <label for="agency_name"
                    class="block mb-2 font-medium text-gray-900 dark:text-white">Tên
                 đại lý</label>
-            <select name="agency_name" id="agency_name"
-                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required>
-                <option value="0">-- Chọn đại lý --</option>
-            </select>
+            <input type="text" disabled name="agency_name" id="agency_name"
+                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   placeholder="Nhập tên đại lý" required>
         </div>
-
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="agency_id"
@@ -94,10 +104,8 @@
         </p>
     </div>
 </footer>
-{{--lastest jquery --}}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{{--lastest jquery --}}
-
+<script src="{{ asset('js/jquery-ui.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 <script>
@@ -109,12 +117,21 @@
 
     $('#province').on('change', function () {
         let provinceId = $(this).val();
+        $('#agency_name').val('').attr('disabled', false);
+        $('#agency_id').val('');
+        $('#distributor').val('0');
+        $('#phone_number').val('');
         getAgencies(provinceId);
     });
 
     $('#agency_name').on('change', function () {
-        let agencyId = $(this).val();
+        // let agencyId = $(this).val();
+        // $('#agency_id').val(agencyId);
+
+        let agencyName = $(this).val();
+        let agencyId = agencyName.split(' - ')[1];
         $('#agency_id').val(agencyId);
+
     });
 
     $('#send-data').on('click', function (e) {
@@ -168,9 +185,8 @@
                 let agencies = data.agencies;
                 let distributors = data.distributors;
 
-
-                $('#agency_name').empty();
-                $('#agency_name').append('<option value="0">-- Chọn đại lý --</option>');
+                // $('#agency_name').empty();
+                // $('#agency_name').append('<option value="0">-- Chọn đại lý --</option>');
 
                 $('#distributor').empty();
                 $('#distributor').append('<option value="0">-- Chọn nhà phân phối --</option>');
@@ -199,9 +215,18 @@
                     });
                 }
 
-                agencies.forEach(function (agency) {
-                    $('#agency_name').append('<option value="' + agency.agency_id + '">' + agency.agency_name + ' - ' + agency.agency_id + '</option>');
+                let agencyNames = agencies.map(function (agency) {
+                    return agency.agency_name + ' - ' + agency.agency_id;
                 });
+
+                $("#agency_name").autocomplete({
+                    source: agencyNames
+                });
+
+                //
+                // agencies.forEach(function (agency) {
+                //     $('#agency_name').append('<option value="' + agency.agency_id + '">' + agency.agency_name + ' - ' + agency.agency_id + '</option>');
+                // });
 
                 distributors.forEach(function (distributor) {
                     $('#distributor').append('<option value="' + distributor.id + '">' + distributor.distributor_name + '</option>');
