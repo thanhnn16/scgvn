@@ -126,7 +126,7 @@
 
         let customer_code = $('#agency_id').val();
         let province = $('#province option:selected').text();
-        let distributor = $('#distributor').val();
+        let distributor = $('#distributor option:selected').text();
         let uid = $('#uid').val();
 
         $.ajax({
