@@ -62,9 +62,11 @@ class EventController extends Controller
 //        })->unique('province_id');
 
         $event_agencies = $event->eventAgencies;
+
         $event_agencies->map(function ($item) {
             return $item->agency->province;
-        })->unique('province_id');
+        })->filter()->unique('province_id');
+
 
         $prizes = $event->prizes;
         foreach ($prizes as $prize) {

@@ -37,7 +37,8 @@
             @foreach($event->prizes as $prize)
                 <div class="card prize-box mx-3 p-4">
                     <div class="prize-item">
-                        <div class="prize-name card-title mb-1 fw-bold">{{ $prize->prize_name }}</div>
+                        <div data-prize-id="{{ $prize->prize_id }}"
+                             class="prize-name card-title mb-1 fw-bold">{{ $prize->prize_name }}</div>
                         <div class="card-body p-0">
                             <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->prize_qty }} </span>
                             </div>
@@ -106,9 +107,9 @@
 
     let prizes = @json($event->prizes).map(prize => ({...prize, remaining: prize.prize_qty}));
 
-
     // console.log('Agencies: ', agencies);
-    // console.log('Prizes: ', prizes);
+
+    console.log('Prizes: ', prizes);
 
     let isReady = false;
 
@@ -164,7 +165,8 @@
             return;
         }
 
-        let selectedPrize = prizes.find(prize => prize.prize_name === $('.selected_prize').text());
+        let selectedPrize = prizes.find(prize => prize.prize_id === $('.selected_prize').data('prize-id'));
+
         if (!selectedPrize) {
             $('#notiText').text('Vui lòng chọn giải thưởng trước khi quay');
             $('#notiModal').modal('show');
@@ -212,6 +214,10 @@
             result.unshift(1);
         }
 
+        console.log(`Current selected prize: ${selectedPrize.prize_name}`);
+
+        console.log(`Current prize with remaining: ${selectedPrize.remaining}`);
+
         sound.play();
         isSpinning = true;
         $('#btn-stop').prop('disabled', false);
@@ -239,10 +245,7 @@
                 $('#btn-start').prop('disabled', false);
 
                 $('#confirmBtn').off('click').click(function () {
-                    console.log('Still run this func')
-                    console.log(`Selected prize text: ${$('.selected_prize').text()} before minus: ${selectedPrize.remaining}`);
                     selectedPrize.remaining -= 1;
-                    console.log(`Selected prize text: ${$('.selected_prize').text()} after minus: ${selectedPrize.remaining}`);
                     $('.selected_prize').parent().find('.prize-quantity span').text(selectedPrize.remaining);
                     hideCanvas();
                     $('#congratsModel').modal('hide');
@@ -253,6 +256,13 @@
 
                     $('#spinner ul').css('top', '0');
                 });
+
+                $('#cancelBtn').off('click').click(function () {
+                    hideCanvas();
+                    $('#congratsModel').modal('hide');
+                    $('#spinner ul').css('top', '0');
+                });
+
             }
         });
     }
@@ -264,10 +274,18 @@
     }
 
     $('.card-title').click(function () {
-        isReady = true;
-        $('.card-title').removeClass('selected_prize');
-        $(this).addClass('selected_prize');
-    });
+    let prizeId = $(this).data('prize-id');
+    let selectedPrize = prizes.find(prize => prize.prize_id === prizeId);
+
+    if (!selectedPrize) {
+        alert('Giải thưởng không tồn tại');
+        return;
+    }
+
+    isReady = true;
+    $('.card-title').removeClass('selected_prize');
+    $(this).addClass('selected_prize');
+});
 
     function addPrize(event_agency_id, prize_id) {
         $.ajax({
