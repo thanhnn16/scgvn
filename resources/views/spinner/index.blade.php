@@ -37,7 +37,7 @@
             @foreach($event->prizes as $prize)
                 <div class="card prize-box mx-3 p-4">
                     <div class="prize-item">
-                        <div data-prize-id="{{ $prize->prize_id }}"
+                        <div data-prize-id="{{ $prize->id }}"
                              class="prize-name card-title mb-1 fw-bold">{{ $prize->prize_name }}</div>
                         <div class="card-body p-0">
                             <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->prize_qty }} </span>
