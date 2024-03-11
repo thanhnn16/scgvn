@@ -43,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/events/upcoming', [EventController::class, 'showUpcoming'])->name('events.upcoming');
     Route::get('/events/past', [EventController::class, 'showPast'])->name('events.past');
     Route::get('/events/filter', [EventController::class, 'filter'])->name('events.filter');
+    Route::get('/events/filterWithStatus', [EventController::class, 'filterWithStatus'])->name('events.filterWithStatus');
     Route::get('/events/detail', [EventController::class, 'getEventData'])->name('events.get-data');
 
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');

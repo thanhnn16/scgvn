@@ -180,7 +180,7 @@
 
             function getEvents(start_date, end_date) {
                 $.ajax({
-                    url: '{{ route('events.filter') }}',
+                    url: '{{ route('events.filterWithStatus') }}',
                     type: 'GET',
                     data: {
                         start_date: start_date,
@@ -190,7 +190,7 @@
                         }
                     },
                     success: function (data) {
-                        console.log(data)
+                        // console.log(data)
                         if (data.length === 0) {
                             alert('Không có sự kiện nào trong khoảng thời gian này');
                         }

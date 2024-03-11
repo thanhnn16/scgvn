@@ -209,11 +209,21 @@ class EventController extends Controller
         return response()->json($events);
     }
 
-    public
-    function filter(Request $request): JsonResponse
+    public function filter(Request $request): JsonResponse
     {
         $events = Event::where('start_date', '>=', $request->start_date)
             ->where('end_date', '<=', $request->end_date)
+            ->get();
+        $events->load('eventAgencies');
+//        $events->load('prizes');
+        return response()->json($events);
+    }
+
+    public function filterWithStatus(Request $request): JsonResponse
+    {
+        $events = Event::where('start_date', '>=', $request->start_date)
+            ->where('end_date', '<=', $request->end_date)
+            ->where('status', 'published')
             ->get();
         $events->load('eventAgencies');
 //        $events->load('prizes');
