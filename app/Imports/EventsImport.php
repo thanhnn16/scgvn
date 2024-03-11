@@ -22,8 +22,14 @@ class EventsImport implements ToModel, WithHeadingRow
             return null;
         }
 
-        $startDate = Date::excelToDateTimeObject($row['ngay_bat_dau']);
-        $endDate = Date::excelToDateTimeObject($row['ngay_ket_thuc']);
+        try {
+            $startDate = Date::excelToDateTimeObject($row['ngay_bat_dau']);
+            $endDate = Date::excelToDateTimeObject($row['ngay_ket_thuc']);
+        }catch (Exception $e) {
+            Log::error($e->getMessage());
+            throw new Exception('Vui lòng chuyển ngày bắt đầu và ngày kết thúc sang định dạng Date trong Excel');
+        }
+
 
         if ($endDate < $startDate) {
             throw new Exception('Ngày kết thúc không nhỏ hơn ngày bắt đầu!');
