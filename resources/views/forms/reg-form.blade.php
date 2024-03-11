@@ -72,16 +72,10 @@
                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder=" " required/>
         </div>
-
-        <div class="relative z-0 w-full mb-5 group">
-            <label for="uid"
-                   class="block mb-2  font-medium text-gray-900 dark:text-white">Zalo User Id</label>
-            <input type="text" disabled name="uid" id="uid"
-                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                   placeholder=" " required
-            />
-        </div>
-
+        <input type="hidden" disabled name="uid" id="uid"
+               class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+               placeholder=" " required
+        />
         <button id="send-data" type="submit"
                 class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Gửi thông tin
@@ -134,17 +128,40 @@
 
     });
 
-    $('#send-data').on('click', function (e) {
+
+    $('#reg-form').on('submit', function (e) {
+
         e.preventDefault();
 
         let phone_number = $('#phone_number').val();
-        let customer_name_text = $('#agency_name option:selected').text();
+        let customer_name_text = $('#agency_name').val();
         let customer_name = customer_name_text.split(' - ')[0];
 
         let customer_code = $('#agency_id').val();
         let province = $('#province option:selected').text();
         let distributor = $('#distributor option:selected').text();
         let uid = $('#uid').val();
+
+        // validate before submit
+        if (phone_number.length < 10) {
+            alert('Số điện thoại không hợp lệ');
+            return;
+        }
+
+        if (customer_name === '') {
+            alert('Tên đại lý không hợp lệ');
+            return;
+        }
+
+        if (customer_code === '') {
+            alert('Mã đại lý không hợp lệ');
+            return;
+        }
+
+        if (province === '-- Tỉnh --') {
+            alert('Chưa chọn tỉnh');
+            return;
+        }
 
         $.ajax({
             url: 'https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml',
