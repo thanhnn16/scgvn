@@ -157,13 +157,13 @@
                         @foreach($event_agencies as $agency)
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->keywords }}</div>
+                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->keywords ?? ' - ' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->agency_id }}</div>
+                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->agency_id ?? ' - ' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->agency_name }}</div>
+                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->agency_name ?? ' - ' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center">
                                     <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->province->province ?? ' - ' }}</div>
