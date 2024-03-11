@@ -165,7 +165,7 @@
             return;
         }
 
-        let selectedPrize = prizes.find(prize => prize.prize_id === $('.selected_prize').data('prize-id'));
+        let selectedPrize = prizes.find(prize => prize.id === $('.selected_prize').data('prize-id'));
 
         if (!selectedPrize) {
             $('#notiText').text('Vui lòng chọn giải thưởng trước khi quay');
@@ -275,7 +275,7 @@
 
     $('.card-title').click(function () {
     let prizeId = $(this).data('prize-id');
-    let selectedPrize = prizes.find(prize => prize.prize_id === prizeId);
+    let selectedPrize = prizes.find(prize => prize.id === prizeId);
 
     if (!selectedPrize) {
         alert('Giải thưởng không tồn tại');
