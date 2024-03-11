@@ -20,7 +20,7 @@ class SpinnerController extends Controller
      */
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        $events = Event::all();
+        $events = Event::where('status', 'published')->get();
         return view('spinner.spinner-management', compact(['events']));
     }
 
