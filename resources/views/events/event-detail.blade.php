@@ -166,7 +166,7 @@
                                     <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->agency_name }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center">
-                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->province->province }}</div>
+                                    <div class="text-sm leading-5 text-gray-900">{{ $agency->agency->province->province ?? ' - ' }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-center">
                                     <div class="text-sm leading-5 text-gray-900">{{ $agency->prize->prize_name ?? '-' }}</div>

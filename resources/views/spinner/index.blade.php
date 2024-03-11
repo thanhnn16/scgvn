@@ -158,16 +158,13 @@
 
         let totalPrizes = prizes.reduce((total, prize) => total + prize.remaining, 0);
 
-        console.log('Total prizes: ', totalPrizes);
+        // console.log('Total prizes: ', totalPrizes);
 
         if (totalPrizes <= 0) {
-            let hasPrizesRemaining = prizes.some(prize => prize.remaining > 0);
-            if (!hasPrizesRemaining) {
-                $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
-                $('#notiModal').modal('show');
-                showCanvas();
-                return;
-            }
+            $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
+            $('#notiModal').modal('show');
+            showCanvas();
+            return;
         }
 
         let selectedPrize = prizes.find(prize => prize.id === $('.selected_prize').data('prize-id'));
@@ -188,8 +185,9 @@
         //     return;
         // }
         if (agencies.length === 0) {
-            $('#notiText').text('Đã hết phần thưởng trong sự kiện lần này. Chúc mừng các đại lý đã trúng thưởng. Vui lòng chờ sự kiện tiếp theo');
+            $('#notiText').text('Đã quay hết danh sách đại lý trong sự kiện lần này. Chúc mừng các đại lý đã trúng giải!!');
             $('#notiModal').modal('show');
+            showCanvas();
             return;
         }
 
@@ -219,9 +217,9 @@
             result.unshift(1);
         }
 
-        console.log(`Current selected prize: ${selectedPrize.prize_name}`);
+        // console.log(`Current selected prize: ${selectedPrize.prize_name}`);
 
-        console.log(`Current prize with remaining: ${selectedPrize.remaining}`);
+        // console.log(`Current prize with remaining: ${selectedPrize.remaining}`);
 
         sound.play();
         isSpinning = true;
@@ -241,25 +239,31 @@
             onFinish: function () {
                 sound.pause();
                 congratsSound.play();
-
                 isSpinning = false;
                 showCanvas();
+
                 $('#congratsText').text(`Chúc mừng đại lý ${agencyName} đã trúng giải ${selectedPrize.prize_name}`);
+
                 $('#congratsModel').modal('show');
 
                 $('#btn-start').prop('disabled', false);
 
                 $('#confirmBtn').off('click').click(function () {
                     selectedPrize.remaining -= 1;
+
                     $('.selected_prize').parent().find('.prize-quantity span').text(selectedPrize.remaining);
+
                     hideCanvas();
+
                     $('#congratsModel').modal('hide');
-                    addPrize(resultString, selectedPrize.id);
 
                     let agencyName = agency.agency.agency_name;
+
                     $('.selected_prize').parent().find('.list-agency').append('<p class="prize-winner"> • ' + agencyName + '</p>');
 
                     $('#spinner ul').css('top', '0');
+
+                    addPrize(resultString, selectedPrize.id);
                 });
 
                 $('#cancelBtn').off('click').click(function () {
