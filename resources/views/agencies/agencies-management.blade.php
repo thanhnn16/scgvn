@@ -406,10 +406,10 @@ class="text-red-500 hover:text-red-700 delAgency">Xóa</a>
                     let agency_name = $('#agency_name-edt').val();
                     let province_id = $('#province_id-edt').val();
 
-                    console.log('keywords: ', keywords);
-                    console.log('agency_id: ', agency_id);
-                    console.log('agency_name: ', agency_name);
-                    console.log('province_id: ', province_id);
+                    // console.log('keywords: ', keywords);
+                    // console.log('agency_id: ', agency_id);
+                    // console.log('agency_name: ', agency_name);
+                    // console.log('province_id: ', province_id);
 
                     $.ajax({
                         url: '{{ route('agencies.update') }}',
@@ -428,7 +428,7 @@ class="text-red-500 hover:text-red-700 delAgency">Xóa</a>
                                 alert('Sửa đại lý thành công');
                                 window.location.reload();
                             } else {
-                                console.log('response: ', response);
+                                // console.log('response: ', response);
                                 alert('Sửa đại lý thất bại');
                             }
                         },
@@ -442,7 +442,7 @@ class="text-red-500 hover:text-red-700 delAgency">Xóa</a>
             $(document).on('click', '.delAgency', function (e) {
                 let agency_id = $(this).data('agency-agency-id');
                 let agency_name = $(this).data('agency-agency-name');
-                console.log('agency_id: ', agency_id);
+                // console.log('agency_id: ', agency_id);
                 if (confirm(`Bạn có chắc chắn muốn xóa đại lý ${agency_name} không?`)) {
                     $.ajax({
                         url: '{{ route('agencies.destroy') }}',

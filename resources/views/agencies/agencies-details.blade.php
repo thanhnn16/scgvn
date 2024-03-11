@@ -105,7 +105,7 @@
 </x-app-layout>
 
 <script>
-    console.log('hello')
-    console.log('Agency: ', @json($agency));
-    console.log('Agency EV: ', @json($eventAgencies));
+    // console.log('hello')
+    {{--console.log('Agency: ', @json($agency));--}}
+    {{--console.log('Agency EV: ', @json($eventAgencies));--}}
 </script>

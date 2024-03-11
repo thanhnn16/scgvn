@@ -64,6 +64,11 @@
 
                     <x-slot name="content">
 
+                        <a target="_blank" href="https://docs.google.com/document/d/e/2PACX-1vQ2lkx9y_HRX2P5m31F9t3bXT3YOuKiXLYsK8Rnko80HzDeRawTRmF2NMfH3lo3ffzClxYQvHCbhVAA/pub"
+                           class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                            {{ __('Hướng dẫn') }}
+                        </a>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Hồ sơ') }}
                         </x-dropdown-link>
@@ -117,6 +122,11 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <a href="https://docs.google.com/document/d/e/2PACX-1vQ2lkx9y_HRX2P5m31F9t3bXT3YOuKiXLYsK8Rnko80HzDeRawTRmF2NMfH3lo3ffzClxYQvHCbhVAA/pub"
+                >
+                    {{ __('Hướng dẫn') }}
+                </a>
+
                 <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                     {{ __('Hồ sơ') }}
                 </x-responsive-nav-link>

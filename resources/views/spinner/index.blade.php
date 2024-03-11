@@ -103,13 +103,15 @@
 
 <script type="text/javascript">
 
+    let testing = new URLSearchParams(window.location.search).get('env') === 'testing';
+
     let agencies = @json($eventAgencies);
 
     let prizes = @json($event->prizes).map(prize => ({...prize, remaining: prize.prize_qty}));
 
     // console.log('Agencies: ', agencies);
 
-    console.log('Prizes: ', prizes);
+    // console.log('Prizes: ', prizes);
 
     let isReady = false;
 
@@ -263,7 +265,12 @@
 
                     $('#spinner ul').css('top', '0');
 
-                    addPrize(resultString, selectedPrize.id);
+                    // console.log(`Is testing: ${testing}`)
+
+                    if (!testing) {
+                        // console.log('Adding prize to agency: ', resultString, selectedPrize.id);
+                        addPrize(resultString, selectedPrize.id);
+                    }
                 });
 
                 $('#cancelBtn').off('click').click(function () {
@@ -283,18 +290,18 @@
     }
 
     $('.card-title').click(function () {
-    let prizeId = $(this).data('prize-id');
-    let selectedPrize = prizes.find(prize => prize.id === prizeId);
+        let prizeId = $(this).data('prize-id');
+        let selectedPrize = prizes.find(prize => prize.id === prizeId);
 
-    if (!selectedPrize) {
-        alert('Giải thưởng không tồn tại');
-        return;
-    }
+        if (!selectedPrize) {
+            alert('Giải thưởng không tồn tại');
+            return;
+        }
 
-    isReady = true;
-    $('.card-title').removeClass('selected_prize');
-    $(this).addClass('selected_prize');
-});
+        isReady = true;
+        $('.card-title').removeClass('selected_prize');
+        $(this).addClass('selected_prize');
+    });
 
     function addPrize(event_agency_id, prize_id) {
         $.ajax({

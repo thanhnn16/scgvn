@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white min-h-96 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900" id="selectEvents">
-                    <h3 class="text-xl font-bold">Chọn sự kiện</h3>
+                    <h3 class="text-xl font-bold">Chọn sự kiện (chỉ hiển thị sự kiện có trạng thái Đã xuất bản/Published)</h3>
                     <div class="flex items-center mt-3 justify-between">
                         <div class="w-2/12">
                             <label for="start_date" class="block text-sm font-medium text-gray-700">Từ ngày</label>
@@ -40,12 +40,17 @@
                         </div>
                     </div>
 
-                    <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" id="showModalBtn"
+                    <button id="normalBtn" data-modal-target="popup-modal" data-modal-toggle="popup-modal" id="showModalBtn"
                             class="mt-3 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button">
                         Bắt đầu quay thưởng
                     </button>
 
+                    <button id="testBtn" data-modal-target="popup-modal" data-modal-toggle="popup-modal" id="showModalBtn"
+                            class="mt-3 block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            type="button">
+                        Bắt đầu quay thưởng (TEST)
+                    </button>
                     <div id="popup-modal" tabindex="-1"
                          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div class="relative p-4 w-full max-w-md max-h-full">
@@ -70,6 +75,7 @@
                                     </svg>
                                     <h3 class="mb-1 text-lg font-normal text-gray-500 dark:text-gray-400">Bắt đầu quay
                                         số?</h3>
+                                    <h3 class="note text-sm text-red-700"></h3>
                                     <h3 class="mb-1 text-sm font-normal text-gray-500 dark:text-gray-400">Tên sự kiện:
                                         <span id="event-name"></span></h3>
                                     <h3 class="mb-5 text-sm font-normal text-gray-500 dark:text-gray-400">Mã sự kiện:
@@ -95,6 +101,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+
+            let isTesting = false;
+
             $('#end_date').change(function () {
                 let start_date = $('#start_date').val();
                 let end_date = $('#end_date').val();
@@ -149,8 +158,23 @@
                     alert('Vui lòng chọn sự kiện');
                     return;
                 } else {
-                    window.location.href = '/spinner/' + event_id;
+                    let url = '{{ route('spinner.show', ':id') }}';
+                    url = url.replace(':id', event_id);
+                    if (isTesting) {
+                        url = url + '?env=testing';
+                    }
+                    window.location.href = url;
                 }
+            });
+
+            $('#testBtn').click(function (e) {
+                isTesting = true;
+                $('.note').text('Chế độ test để kiểm tra quay thưởng, phần thưởng trúng trong sự kiện này sẽ không được tính!');
+            });
+
+            $('#normalBtn').click(function (e) {
+                isTesting = false;
+                $('.note').text('');
             });
 
 

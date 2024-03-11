@@ -37,7 +37,7 @@
         <div class="ui-widget relative z-0 w-full mb-5 group">
             <label for="agency_name"
                    class="block mb-2 font-medium text-gray-900 dark:text-white">Tên
-                đại lý</label>
+                đại lý (Nhập tên để tìm kiếm)</label>
             <input type="text" disabled name="agency_name" id="agency_name"
                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder="Nhập tên đại lý" required>

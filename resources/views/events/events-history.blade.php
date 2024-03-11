@@ -241,7 +241,7 @@
                                 let agency = ev_agency.map(function (item) {
                                     return item.agency;
                                 });
-                                console.log(ev_agency)
+                                // console.log(ev_agency)
                                 let agencyNames = [];
                                 $.each(agency, function (index, value) {
                                     if (value && value.agency_name) {
