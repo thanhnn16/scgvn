@@ -158,11 +158,16 @@
 
         let totalPrizes = prizes.reduce((total, prize) => total + prize.remaining, 0);
 
-        if (totalPrizes === 0) {
-            $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
-            $('#notiModal').modal('show');
-            showCanvas();
-            return;
+        console.log('Total prizes: ', totalPrizes);
+
+        if (totalPrizes <= 0) {
+            let hasPrizesRemaining = prizes.some(prize => prize.remaining > 0);
+            if (!hasPrizesRemaining) {
+                $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
+                $('#notiModal').modal('show');
+                showCanvas();
+                return;
+            }
         }
 
         let selectedPrize = prizes.find(prize => prize.id === $('.selected_prize').data('prize-id'));
