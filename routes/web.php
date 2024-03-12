@@ -37,6 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/events/store', [EventController::class, 'store'])->name('events.store');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::post('/events/duplicate', [EventController::class, 'duplicateEvent'])->name('events.duplicate');
+    Route::post('/events/archive', [EventController::class, 'archive'])->name('events.archive');
 
     Route::get('/events/all', [EventController::class, 'showAll'])->name('events.all');
     Route::get('/events/ongoing', [EventController::class, 'showOngoing'])->name('events.ongoing');

@@ -78,7 +78,7 @@
                                     <div class="text-sm text-center text-gray-900">{{ $event->title }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                                    <div class="text-sm text-gray-900">{{ $event->content }}</div>
+                                    <div class="text-sm max-w-md overflow-ellipsis overflow-clip text-gray-900">{{ $event->content }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">{{ Carbon::parse($event->start_date)->format('d/m/Y') }}
@@ -220,7 +220,7 @@
                 <div class="text-sm text-center text-gray-900">${event.title}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap overflow-hidden overflow-ellipsis">
-                <div class="text-sm text-gray-900">${event.content}</div>
+                <div class="text-sm max-w-md overflow-ellipsis overflow-clip text-gray-900">${event.content}</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap">
     <div class="text-sm text-center text-gray-900">
@@ -236,7 +236,16 @@
     </div>
 </td>
             <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-center text-gray-900">${event.status} </div>
+                <div class="text-sm text-center text-gray-900">@switch($event->status)
+            @case('draft')
+            Nháp
+@break
+            @case('published')
+            Xuất bản
+@break
+            @default
+            Lưu trữ
+@endswitch</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                 <a href="events/${eventId}"

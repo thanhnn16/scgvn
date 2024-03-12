@@ -159,6 +159,7 @@
     function startSpin() {
 
         let totalPrizes = prizes.reduce((total, prize) => total + prize.remaining, 0);
+        let selectedPrize = prizes.find(prize => prize.id === $('.selected_prize').data('prize-id'));
 
         // console.log('Total prizes: ', totalPrizes);
 
@@ -166,16 +167,28 @@
             $('#notiText').text('Sự kiện đã kết thúc. Chúc mừng các đại lý đã trúng giải!!');
             $('#notiModal').modal('show');
             showCanvas();
+            if (!testing) {
+                archiveEvent();
+            }
             return;
         }
 
-        let selectedPrize = prizes.find(prize => prize.id === $('.selected_prize').data('prize-id'));
+        if (agencies.length === 0) {
+            $('#notiText').text('Đã quay hết dang sách đại lý trong sự kiện lần này. Chúc mừng các đại lý đã trúng giải!!');
+            $('#notiModal').modal('show');
+            showCanvas();
+            if (!testing) {
+                archiveEvent();
+            }
+            return;
+        }
 
         if (!selectedPrize) {
             $('#notiText').text('Vui lòng chọn giải thưởng trước khi quay');
             $('#notiModal').modal('show');
             return;
         }
+
         if (selectedPrize.remaining === 0) {
             $('#notiText').text('Giải thưởng này đã hết, vui lòng chọn giải thưởng khác');
             $('#notiModal').modal('show');
@@ -186,12 +199,6 @@
         //     $('#notiModal').modal('show');
         //     return;
         // }
-        if (agencies.length === 0) {
-            $('#notiText').text('Đã quay hết danh sách đại lý trong sự kiện lần này. Chúc mừng các đại lý đã trúng giải!!');
-            $('#notiModal').modal('show');
-            showCanvas();
-            return;
-        }
 
         $('.btn-toggle').text('Dừng quay').attr('id', 'btn-stop');
 
@@ -311,6 +318,25 @@
                 event_id: {{ $event->id }},
                 agency_id: event_agency_id,
                 prize_id: prize_id
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    function archiveEvent() {
+        $.ajax({
+            url: '{{ route('events.archive') }}',
+            type: 'POST',
+            data: {
+                event_id: {{ $event->id }}
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

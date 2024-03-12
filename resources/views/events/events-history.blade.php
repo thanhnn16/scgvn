@@ -224,12 +224,12 @@
                                 '<div class="text-sm leading-5 text-gray-900">' + value.agency.agency_name + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
-                                '<div class="text-sm leading-5 text-gray-900">' + value.agency.province.province + '</div>' +
+                                '<div class="text-sm text-center leading-5 text-gray-900">' + value.agency.province.province + '</div>' +
                                 '</td>' +
                                 '<td class="px-6 py-4 whitespace-no-wrap">' +
-                                '<div class="text-sm leading-5 text-gray-900">' + (value.prize ? value.prize.prize_name : '-') + '</div>' +
+                                '<div class="text-sm max-w-sm overflow-ellipsis overflow-clip leading-5 text-gray-900">' + (value.prize ? value.prize.prize_name : '-') + '</div>' +
                                 '</td>' + '</td>' +
-                                '<td class="px-6 py-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">' +
+                                '<td class="px-6 py-4 whitespace-no-wrap text-center text-sm leading-5 font-medium">' +
                                 `<a href="/agencies/detail/${value.agency_id}" class="text-indigo-600 hover:text-indigo-900">Xem chi tiết</a>` +
                                 '</td>' +
                                 '</tr>');
@@ -259,7 +259,7 @@
                                     '<div class="text-sm leading-5 text-gray-900">' + value.prize_qty + '</div>' +
                                     '</td>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center">' +
-                                    '<div class="text-sm leading-5 text-gray-900">' + prizeDes + '</div>' +
+                                    '<div class="text-sm max-w-md overflow-ellipsis overflow-clip leading-5 text-gray-900">' + prizeDes + '</div>' +
                                     '</td>' +
                                     '<td class="px-6 py-4 whitespace-no-wrap text-center">' +
                                     '<div class="text-sm leading-5 text-gray-900">' + winnerString + '</div>' +

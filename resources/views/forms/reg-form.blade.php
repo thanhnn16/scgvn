@@ -12,7 +12,7 @@
         <div class="relative z-0 w-full mb-5 group">
             <label for="province"
                    class="block mb-2 font-medium text-gray-900 dark:text-white">Chọn
-                tỉnh</label>
+                tỉnh <span class="text-red-700">*</span></label>
             <select name="province" id="province"
                     class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required>
@@ -34,19 +34,19 @@
         {{--            </select>--}}
         {{--        </div>--}}
 
-        <div class="ui-widget relative z-0 w-full mb-5 group">
+        <div class="relative z-0 w-full mb-5 group">
             <label for="agency_name"
                    class="block mb-2 font-medium text-gray-900 dark:text-white">Tên
-                đại lý (Nhập tên để tìm kiếm)</label>
+                đại lý (Nhập tên để tìm kiếm) <span class="text-red-700">*</span></label>
             <input type="text" disabled name="agency_name" id="agency_name"
-                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   class="ui-widget bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder="Nhập tên đại lý" required>
         </div>
 
         <div class="relative z-0 w-full mb-5 group">
             <label for="agency_id"
                    class="block mb-2 font-medium text-gray-900 dark:text-white">Mã
-                đại lý</label>
+                đại lý <span class="text-red-700">*</span></label>
             <input type="text" name="agency_id" id="agency_id" disabled
                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder="Mã đại lý" required/>
@@ -67,15 +67,29 @@
         <div class="relative z-0 w-full mb-5 group">
             <label for="phone_number"
                    class="block mb-2  font-medium text-gray-900 dark:text-white">Số
-                điện thoại</label>
+                điện thoại đại lý <span class="text-red-700">(Có sử dụng Zalo) *</span></label>
             <input type="tel" name="phone_number" id="phone_number"
                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                    placeholder=" " required/>
         </div>
+
+        <div class="relative z-0 w-full mb-2 group">
+            <label for="sale_support"
+                   class="block mb-2  font-medium text-gray-900 dark:text-white">Nhân viên hỗ trợ (Nếu có)</label>
+            <input type="text" name="sale_support" id="sale_support"
+                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   placeholder=" " required/>
+        </div>
+
         <input type="hidden" disabled name="uid" id="uid"
                class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                placeholder=" " required
         />
+        <div class="relative z-0 w-full mb-5 group">
+            <span class="text-red-700 italic text-sm">Trường có dấu * là bắt buộc</span>
+        </div>
+
+
         <button id="send-data" type="submit"
                 class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg  w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Gửi thông tin
@@ -134,6 +148,7 @@
         e.preventDefault();
 
         let phone_number = $('#phone_number').val();
+        let sale_support = $('#sale_support').val();
         let customer_name_text = $('#agency_name').val();
         let customer_name = customer_name_text.split(' - ')[0];
 
@@ -170,6 +185,7 @@
                 phone_number: phone_number,
                 customer_name: customer_name,
                 customer_code: customer_code,
+                sale_support: sale_support,
                 province: province,
                 distributor: distributor,
                 uid: uid

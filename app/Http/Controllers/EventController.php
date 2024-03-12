@@ -80,9 +80,16 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function archive(Request $request): JsonResponse
     {
-        //
+        try {
+            $event = Event::find($request->event_id);
+            $event->status = 'archived';
+            $event->save();
+            return response()->json(['status' => 'success', 'message' => 'Lưu trữ sự kiện thành công!']);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
     }
 
     /**
