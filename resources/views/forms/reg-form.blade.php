@@ -127,7 +127,7 @@
         let provinceId = $(this).val();
         $('#agency_name').val('').attr('disabled', false);
         $('#agency_id').val('');
-        $('#distributor').val('0');
+        // $('#distributor').val('0');
         $('#phone_number').val('');
         getAgencies(provinceId);
     });
@@ -154,7 +154,7 @@
 
         let customer_code = $('#agency_id').val();
         let province = $('#province option:selected').text();
-        let distributor = $('#distributor option:selected').text();
+        let distributor = "";
         let uid = $('#uid').val();
 
         // validate before submit
@@ -238,7 +238,7 @@
             },
             success: function (data) {
                 let agencies = data.agencies;
-                let distributors = data.distributors;
+                // let distributors = data.distributors;
 
                 // $('#agency_name').empty();
                 // $('#agency_name').append('<option value="0">-- Chọn đại lý --</option>');
@@ -258,17 +258,17 @@
                     });
                 }
 
-                if (Array.isArray(distributors)) {
-                    distributors.sort(function (a, b) {
-                        if (a.distributor < b.distributor) {
-                            return -1;
-                        }
-                        if (a.distributor > b.distributor) {
-                            return 1;
-                        }
-                        return 0;
-                    });
-                }
+                // if (Array.isArray(distributors)) {
+                //     distributors.sort(function (a, b) {
+                //         if (a.distributor < b.distributor) {
+                //             return -1;
+                //         }
+                //         if (a.distributor > b.distributor) {
+                //             return 1;
+                //         }
+                //         return 0;
+                //     });
+                // }
 
                 let agencyNames = agencies.map(function (agency) {
                     return agency.agency_name + ' - ' + agency.agency_id;
@@ -283,9 +283,9 @@
                 //     $('#agency_name').append('<option value="' + agency.agency_id + '">' + agency.agency_name + ' - ' + agency.agency_id + '</option>');
                 // });
 
-                distributors.forEach(function (distributor) {
-                    $('#distributor').append('<option value="' + distributor.id + '">' + distributor.distributor_name + '</option>');
-                });
+                // distributors.forEach(function (distributor) {
+                //     $('#distributor').append('<option value="' + distributor.id + '">' + distributor.distributor_name + '</option>');
+                // });
             },
             error: function (error) {
                 console.log(error);
