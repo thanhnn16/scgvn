@@ -1,7 +1,7 @@
 # drop database if exists scgvn_dev;
 # create database if not exists scgvn_dev;
 #
-# use scgvn_dev;
+use scgvn_dev;
 #
 # create table users
 # (
