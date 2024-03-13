@@ -52,16 +52,16 @@
                    placeholder="Mã đại lý" required/>
         </div>
 
-        <div class="relative z-0 w-full mb-5 group">
-            <label for="distributor"
-                   class="block mb-2  font-medium text-gray-900 dark:text-white">Nhà
-                phân phối</label>
-            <select name="distributor" id="distributor"
-                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required>
-                <option value="0">-- Chọn nhà phân phối --</option>
-            </select>
-        </div>
+{{--        <div class="relative z-0 w-full mb-5 group">--}}
+{{--            <label for="distributor"--}}
+{{--                   class="block mb-2  font-medium text-gray-900 dark:text-white">Nhà--}}
+{{--                phân phối</label>--}}
+{{--            <select name="distributor" id="distributor"--}}
+{{--                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"--}}
+{{--                    required>--}}
+{{--                <option value="0">-- Chọn nhà phân phối --</option>--}}
+{{--            </select>--}}
+{{--        </div>--}}
 
 
         <div class="relative z-0 w-full mb-5 group">
@@ -78,7 +78,7 @@
                    class="block mb-2  font-medium text-gray-900 dark:text-white">Nhân viên hỗ trợ (Nếu có)</label>
             <input type="text" name="sale_support" id="sale_support"
                    class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                   placeholder=" " required/>
+                   placeholder=" " />
         </div>
 
         <input type="hidden" disabled name="uid" id="uid"
