@@ -1,6 +1,6 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <div class="form-container md:w-full sm:w-10/12 mx-auto py-2 justify-items-center mt-6 px-4">
@@ -178,6 +178,7 @@
             return;
         }
 
+
         $.ajax({
             url: 'https://external-v1-stg.omicrm.com/api/campaign/webhook/65de9ab9bc80f44218300276-l5QPJQ7Tyab4cLqxu5Ml',
             type: 'POST',
@@ -197,6 +198,27 @@
             success: function (data) {
                 $('#reg-form').addClass('hidden');
                 $('.reg-result').removeClass('hidden').find('p').text('Đăng ký thành công, SCG xin chân thành cảm ơn!');
+
+                $.ajax({
+                    url: '{{ route('event-agencies.register') }}',
+                    type: 'POST',
+                    data: {
+                        agency_id: customer_code,
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        if (data.status === 'success') {
+                            console.log(data);
+                        } else {
+                            console.log(data);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             },
             error: function (error) {
                 console.log(error);

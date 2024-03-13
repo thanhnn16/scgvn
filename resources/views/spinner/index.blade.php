@@ -40,10 +40,14 @@
                         <div data-prize-id="{{ $prize->id }}"
                              class="prize-name card-title mb-1 fw-bold">{{ $prize->prize_name }}</div>
                         <div class="card-body p-0">
-                            <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->prize_qty }} </span>
+                            <div class="prize-quantity text-center">Còn lại: <span> {{ $prize->remaining }} </span>
                             </div>
                             <div class="prize-quantity">Đại lý trúng giải</div>
-                            <div class="list-agency"></div>
+                            <div class="list-agency">
+                                @foreach($prize->eventAgencies as $eventAgency)
+                                    <p class="prize-winner"> • {{ $eventAgency->agency->agency_name }}</p>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,7 +111,9 @@
 
     let agencies = @json($eventAgencies);
 
-    let prizes = @json($event->prizes).map(prize => ({...prize, remaining: prize.prize_qty}));
+    agencies = agencies.filter(agency => agency.prize_id === null);
+
+    let prizes = @json($event->prizes);
 
     // console.log('Agencies: ', agencies);
 
@@ -276,7 +282,7 @@
 
                     if (!testing) {
                         // console.log('Adding prize to agency: ', resultString, selectedPrize.id);
-                        addPrize(resultString, selectedPrize.id);
+                        addPrize(resultString, selectedPrize.id, selectedPrize.remaining);
                     }
                 });
 
@@ -299,7 +305,6 @@
     $('.card-title').click(function () {
         let prizeId = $(this).data('prize-id');
         let selectedPrize = prizes.find(prize => prize.id === prizeId);
-
         if (!selectedPrize) {
             alert('Giải thưởng không tồn tại');
             return;
@@ -310,7 +315,15 @@
         $(this).addClass('selected_prize');
     });
 
-    function addPrize(event_agency_id, prize_id) {
+    function addPrize(event_agency_id, prize_id, remaining) {
+        // console.log(`Remaining: ${remaining}`)
+        // console.log(`event_agency_id: ${event_agency_id}`)
+        // console.log(`prize_id: ${prize_id}`)
+
+        // parseInt remaining
+        let reaminingNumber = parseInt(remaining);
+
+
         $.ajax({
             url: '{{ route('event-agencies.add-prize') }}',
             type: 'POST',
@@ -324,6 +337,22 @@
             },
             success: function (response) {
                 console.log(response);
+                $.ajax({
+                    url: '/prizes/remaining/' + prize_id,
+                    type: 'PUT',
+                    data: {
+                        remaining: reaminingNumber
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
             },
             error: function (error) {
                 console.log(error);

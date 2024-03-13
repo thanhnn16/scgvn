@@ -36,25 +36,25 @@ class SpinnerController extends Controller
         return view('spinner.index', compact('event', 'eventAgencies'));
     }
 
-    public function awardPrize(Request $request): JsonResponse
-    {
-        try {
-            $agency_id = $request->input('agency_id');
-            $prize_id = $request->input('prize_id');
-            $event_id = $request->input('event_id');
-
-            $event_agency = EventAgency::where('agency_id', $agency_id)
-                ->where('event_id', $event_id)
-                ->first();
-
-            $event_agency->prize_id = $prize_id;
-            $event_agency->save();
-
-            return response()->json(['message' => 'Prize awarded successfully']);
-        } catch (Exception $e) {
-            return response()->json(['message' => 'Error awarding prize: ', $e->getMessage()],
-                500);
-        }
-    }
+//    public function awardPrize(Request $request): JsonResponse
+//    {
+//        try {
+//            $agency_id = $request->input('agency_id');
+//            $prize_id = $request->input('prize_id');
+//            $event_id = $request->input('event_id');
+//
+//            $event_agency = EventAgency::where('agency_id', $agency_id)
+//                ->where('event_id', $event_id)
+//                ->first();
+//
+//            $event_agency->prize_id = $prize_id;
+//            $event_agency->save();
+//
+//            return response()->json(['message' => 'Prize awarded successfully']);
+//        } catch (Exception $e) {
+//            return response()->json(['message' => 'Error awarding prize: ', $e->getMessage()],
+//                500);
+//        }
+//    }
 
 }

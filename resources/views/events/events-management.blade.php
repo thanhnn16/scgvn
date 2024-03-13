@@ -86,16 +86,18 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-center text-gray-900">
-                                        @switch($event->status)
-                                            @case('draft')
-                                                Nháp
-                                                @break
-                                            @case('published')
-                                                Xuất bản
-                                                @break
-                                            @default
-                                                Lưu trữ
-                                        @endswitch
+                                        @if($event->status !== null)
+                                            @switch($event->status)
+                                                @case('draft')
+                                                    Nháp
+                                                    @break
+                                                @case('published')
+                                                    Xuất bản
+                                                    @break
+                                                @default
+                                                    Lưu trữ
+                                            @endswitch
+                                        @endif
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
@@ -213,7 +215,6 @@
             let agenciesLength = event.event_agencies.length;
             let eventId = event.id;
 
-
             return `
         <tr>
             <td class="px-6 py-4 whitespace-nowrap">
@@ -236,16 +237,9 @@
     </div>
 </td>
             <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-center text-gray-900">@switch($event->status)
-            @case('draft')
-            Nháp
-@break
-            @case('published')
-            Xuất bản
-@break
-            @default
-            Lưu trữ
-@endswitch</div>
+                <div class="text-sm text-center text-gray-900">
+${event.status === 'draft' ? 'Nháp' : event.status === 'published' ? 'Xuất bản' : 'Lưu trữ'}
+</div>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                 <a href="events/${eventId}"

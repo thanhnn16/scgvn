@@ -80,11 +80,23 @@ class PrizeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prize $prize)
+    public function update(Request $request, Prize $prize): JsonResponse
     {
         try {
             $prize->update($request->all());
-            return response()->json(['status' => 'success', 'message' => 'Cập nhật giải thưởng thành công!']);
+
+            return response()->json(['status' => 'success', 'message' => 'Cập nhật giải thưởng thành công!', 'prize' => $prize]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function remaining(Request $request, Prize $prize): JsonResponse
+    {
+        try {
+            $prize->remaining = (int)$request->remaining;
+            $prize->save();
+            return response()->json(['status' => 'success', 'message' => 'Cập nhật giải thưởng thành công!', 'prize' => $prize]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

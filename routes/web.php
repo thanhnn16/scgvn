@@ -79,6 +79,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/prizes/store', [PrizeController::class, 'store'])->name('prizes.store');
     Route::delete('/prizes/{prize}', [PrizeController::class, 'destroy'])->name('prizes.destroy');
     Route::put('/prizes/{prize}', [PrizeController::class, 'update'])->name('prizes.update');
+    Route::put('/prizes/remaining/{prize}', [PrizeController::class, 'remaining'])->name('prizes.remaining');
 
 //    spinner
     Route::get('/spinner-management', [SpinnerController::class, 'index'])->name('spinner.management');
@@ -102,6 +103,7 @@ Route::get('/form-dang-ky', function () {
 })->name('forms.dang-ky');
 
 Route::get('/get-agencies', [AgencyController::class, 'getFromProvince'])->name('get-agencies');
+Route::post('/get-agencies/register', [EventAgencyController::class, 'register'])->name('event-agencies.register');
 
 
 require __DIR__ . '/auth.php';

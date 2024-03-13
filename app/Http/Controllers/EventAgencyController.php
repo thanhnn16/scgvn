@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agency;
+use App\Models\Event;
 use App\Models\EventAgency;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -72,6 +74,30 @@ class EventAgencyController extends Controller
                 return response()->json(['error' => 'EventAgency not found']);
             }
         } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function register(Request $request): JsonResponse
+    {
+        try {
+            $agency = Agency::where('agency_id', $request->agency_id)->first();
+            if ($agency) {
+                $keywords = $agency->keywords;
+                $event = Event::where('content', 'like', '%' . $keywords . '%')->first();
+                if ($event) {
+                    EventAgency::create([
+                        'event_id' => $event->id,
+                        'agency_id' => $agency->agency_id,
+                    ]);
+                    return response()->json(['status' => 'success', 'message' => 'Đăng ký sự kiện thành công!']);
+                } else {
+                    return response()->json(['error' => 'Event not found']);
+                }
+            } else {
+                return response()->json(['error' => 'Agency not found']);
+            }
+        }catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
