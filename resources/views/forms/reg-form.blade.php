@@ -137,7 +137,11 @@
         // $('#agency_id').val(agencyId);
 
         let agencyName = $(this).val();
-        let agencyId = agencyName.split(' - ')[1];
+
+        let lastIndex = agencyName.lastIndexOf('-');
+        let agencyId = agencyName.substring(lastIndex + 1);
+        agencyId = agencyId.trim();
+
         $('#agency_id').val(agencyId);
 
     });
