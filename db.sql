@@ -90,17 +90,22 @@ use scgvn_dev;
 #
 # SET GLOBAL time_zone = '+7:00';
 # SET time_zone = '+7:00';
+drop trigger if exists update_remaining;
 
 ALTER TABLE prizes
-ADD COLUMN remaining INT NOT NULL DEFAULT 0;
+MODIFY COLUMN remaining integer;
 
-DELIMITER //
-CREATE TRIGGER update_remaining
-BEFORE INSERT ON prizes
-FOR EACH ROW
-BEGIN
-   SET NEW.remaining = NEW.prize_qty;
-END;//
-DELIMITER ;
+# Q: is type INT = type integer in mysql?
+# A: Yes, it is.
 
-# drop trigger if exists update_remaining;
+#
+# DELIMITER //
+# CREATE TRIGGER update_remaining
+# BEFORE INSERT ON prizes
+# FOR EACH ROW
+# BEGIN
+#    SET NEW.remaining = NEW.prize_qty;
+# END;//
+# DELIMITER ;
+# remove trigger
+# drop trigger update_remaining;

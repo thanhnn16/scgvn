@@ -78,8 +78,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/prizes', [PrizeController::class, 'index'])->name('prizes-management');
     Route::post('/prizes/store', [PrizeController::class, 'store'])->name('prizes.store');
     Route::delete('/prizes/{prize}', [PrizeController::class, 'destroy'])->name('prizes.destroy');
-    Route::put('/prizes/{prize}', [PrizeController::class, 'update'])->name('prizes.update');
-    Route::put('/prizes/remaining/{prize}', [PrizeController::class, 'remaining'])->name('prizes.remaining');
+    Route::post('/prizes/update', [PrizeController::class, 'update'])->name('prizes.update');
+    Route::post('/prizes/remaining/', [PrizeController::class, 'remaining'])->name('prizes.update-remaining');
 
 //    spinner
     Route::get('/spinner-management', [SpinnerController::class, 'index'])->name('spinner.management');

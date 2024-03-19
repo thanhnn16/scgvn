@@ -221,6 +221,9 @@
                                     {{ __('Số lượng') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                    {{ __('Còn lại') }}
+                                </th>
+                                <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                     {{ __('Mô tả') }}
                                 </th>
                                 <th class="px-6 py-3 bg-gray-50 text-center text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -239,6 +242,9 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-center">
                                         <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_qty }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-center">
+                                        <div class="text-sm leading-5 text-gray-900">{{ $prize->remaining }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-center">
                                         <div class="text-sm leading-5 text-gray-900">{{ $prize->prize_desc ?? ' - ' }}</div>
@@ -262,6 +268,7 @@
                                            data-modal-toggle="edtPrizeModal" data-prize-id="{{ $prize->id }}"
                                            data-prize-name="{{ $prize->prize_name }}"
                                            data-prize-qty="{{ $prize->prize_qty }}"
+                                           data-prize-remaining="{{ $prize->remaining }}"
                                            data-prize-desc="{{ $prize->prize_desc }}"
                                            class="text-slate-600 hover:text-blue-600 editPrize">Sửa</a> -
                                         <a href="#" id="{{ $prize->id }}" data-modal-target="prizeDelModal"
@@ -595,6 +602,13 @@
                                    max="50" placeholder="Số lượng">
                         </div>
                         <div class="col-span-2">
+                            <label for="prize_remaining-edt"
+                                   class="block mt-2  font-medium text-gray-900 dark:text-white">Còn lại</label>
+                            <input type="number" name="prize_remaining-edt" id="prize_remaining-edt" maxlength="3"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900  rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                   max="50" placeholder="Còn lại">
+                        </div>
+                        <div class="col-span-2">
                             <label for="prize_description-edt"
                                    class="block mt-2  font-medium text-gray-900 dark:text-white">Mô tả</label>
                             <textarea id="prize_description-edt" rows="4"
@@ -758,22 +772,38 @@
                 $('#prize_name-edt').val($(this).data('prize-name'));
                 $('#prize_quantity-edt').val($(this).data('prize-qty'));
                 $('#prize_description-edt').val($(this).data('prize-desc'));
+                $('#prize_remaining-edt').val($(this).data('prize-remaining'));
 
                 $('#edt-prize').on('click', function (e) {
                     e.preventDefault();
                     let prize_name = $('#prize_name-edt').val();
                     let prize_quantity = $('#prize_quantity-edt').val();
                     let prize_desc = $('#prize_description-edt').val();
+                    let prize_remaining = $('#prize_remaining-edt').val();
+                    let remaining = parseInt(prize_remaining);
+
                     if (prize_name === '' || prize_quantity === '') {
                         alert('Vui lòng nhập đầy đủ thông tin');
                         return;
                     }
+                    if (remaining < 0) {
+                        alert('Số lượng còn lại không thể nhỏ hơn 0');
+                        return;
+                    }
+                    if (remaining > prize_quantity) {
+                        alert('Số lượng còn lại không thể lớn hơn số lượng');
+                        return;
+                    }
+
                     let data = {
+                        id: prize_id,
                         prize_name: prize_name,
                         prize_qty: prize_quantity,
                         prize_desc: prize_desc,
+                        remaining: remaining
                     };
-                    editPrize(prize_id, data);
+
+                    editPrize(data);
                 });
             });
 
@@ -840,10 +870,11 @@
             });
         }
 
-        function editPrize(id, data) {
+        function editPrize(data) {
+            console.log('Data: ', data);
             $.ajax({
-                url: '/prizes/' + id,
-                type: 'PUT',
+                url: '{{ route('prizes.update' ) }}',
+                type: 'POST',
                 data: data,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -851,6 +882,7 @@
                 success: function (response) {
                     if (response.status === 'success') {
                         console.log(response);
+                        alert('Sửa giải thưởng thành công')
                         window.location.reload();
                     } else {
                         console.log(response);

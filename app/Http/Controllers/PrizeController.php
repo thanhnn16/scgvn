@@ -42,6 +42,7 @@ class PrizeController extends Controller
                     Prize::create([
                         'prize_name' => $prize['prize_name'],
                         'prize_qty' => $prize['prize_qty'],
+                        'remaining' => $prize['prize_qty'],
                         'prize_desc' => $prize['prize_desc'],
                         'event_id' => $event_id
                     ]);
@@ -50,6 +51,7 @@ class PrizeController extends Controller
                 Prize::create([
                     'prize_name' => $prizes['prize_name'],
                     'prize_qty' => $prizes['prize_qty'],
+                    'remaining' => $prizes['prize_qty'],
                     'prize_desc' => $prizes['prize_desc'],
                     'event_id' => $event_id
                 ]);
@@ -80,10 +82,15 @@ class PrizeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Prize $prize): JsonResponse
+    public function update(Request $request): JsonResponse
     {
         try {
-            $prize->update($request->all());
+            $prize = Prize::find($request->id);
+            $prize->prize_name = $request->prize_name;
+            $prize->prize_qty = $request->prize_qty;
+            $prize->prize_desc = $request->prize_desc;
+            $prize->remaining = $request->remaining;
+            $prize->save();
 
             return response()->json(['status' => 'success', 'message' => 'Cập nhật giải thưởng thành công!', 'prize' => $prize]);
         } catch (Exception $e) {
@@ -91,10 +98,11 @@ class PrizeController extends Controller
         }
     }
 
-    public function remaining(Request $request, Prize $prize): JsonResponse
+    public function remaining(Request $request): JsonResponse
     {
         try {
-            $prize->remaining = (int)$request->remaining;
+            $prize = Prize::find($request->id);
+            $prize->remaining = $request->remaining;
             $prize->save();
             return response()->json(['status' => 'success', 'message' => 'Cập nhật giải thưởng thành công!', 'prize' => $prize]);
         } catch (Exception $e) {

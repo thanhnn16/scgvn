@@ -281,6 +281,7 @@ class EventController extends Controller
             foreach ($event->prizes as $prize) {
                 $newPrize = $prize->replicate();
                 $newPrize->event_id = $newEvent->id;
+                $newPrize->remaining = $prize->prize_qty;
                 $newPrize->save();
             }
 

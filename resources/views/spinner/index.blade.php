@@ -111,11 +111,13 @@
 
     let agencies = @json($eventAgencies);
 
+    console.log('Agencies before filter: ', agencies);
+
     agencies = agencies.filter(agency => agency.prize_id === null);
 
     let prizes = @json($event->prizes);
 
-    // console.log('Agencies: ', agencies);
+    console.log('Agencies without prizes: ', agencies);
 
     // console.log('Prizes: ', prizes);
 
@@ -321,7 +323,7 @@
         // console.log(`prize_id: ${prize_id}`)
 
         // parseInt remaining
-        let reaminingNumber = parseInt(remaining);
+        let remainingNumber = parseInt(remaining);
 
 
         $.ajax({
@@ -338,10 +340,11 @@
             success: function (response) {
                 console.log(response);
                 $.ajax({
-                    url: '/prizes/remaining/' + prize_id,
-                    type: 'PUT',
+                    url: '{{ route('prizes.update-remaining') }}',
+                    type: 'POST',
                     data: {
-                        remaining: reaminingNumber
+                        id: prize_id,
+                        remaining: remainingNumber
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
